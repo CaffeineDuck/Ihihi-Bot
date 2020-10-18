@@ -15,7 +15,8 @@ players = result.get("players")
 
 #Loop to form dict of player and their xp
 for player in players:
-    member[player.get("id")] = player.get("xp")
+    member[player.get("xp")] = player.get("id")
 
-#Gives the userid of member with max xp
-max_xp_member = max(member, key=member.get)
+#List of user-id of people illegible to get Mod role
+people = list(member.values())[:3]
+
