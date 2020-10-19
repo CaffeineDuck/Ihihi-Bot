@@ -1,16 +1,17 @@
-import requests
-import json
+import discord
+from discord.ext import commands, tasks
 
-request = requests.get("https://mee6.xyz/api/plugins/levels/leaderboard/766213304141086731?limit=999&page=0")
+token = "NzY3Mjc5MjAzMjY3Mzc5Mjgw.X4vmcQ.HWfMnd0Yv-qxAw8QMV_7U115exI"
+client = commands.Bot(command_prefix=".", case_insensitive=True)
 
-result = request.json()
+@client.event
+async def on_ready():
+    print("Bot is ready")
+    
+@client.command()
+async def waifu(ctx):
+    await ctx.send("lol")
+    print("lol")
 
-players = result.get("players")
-
-member={}
-
-for player in players:
-    member[player.get("id")] = player.get("xp")
-
-max_xp_member = max(member, key=member.get)
+client.run(token)
 

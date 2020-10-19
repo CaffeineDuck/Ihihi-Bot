@@ -3,7 +3,8 @@ import json
 import discord
 from discord.ext import commands, tasks
 from discord.utils import get
-import logger
+import datetime
+import random
 
 #Class to get the list of applicable members
 class applicable_members:
@@ -42,20 +43,19 @@ class samrid_bot:
     @client.event
     async def on_ready():
         print("Bot is ready")
-        
+
     #Response to be given on message
-    @client.event
-    async def on_message(message):
+    @client.listen('on_message')
+    async def no_prefix(message):
 
-        try:
-            #mee6API
-            mee6API = "https://mee6.xyz/api/plugins/levels/leaderboard/"+str(message.guild.id)+"?limit=999&page=0"
+        #mee6API
+        mee6API = "https://mee6.xyz/api/plugins/levels/leaderboard/"+str(message.guild.id)+"?limit=999&page=0"
 
-            #Checks If the messager isn't bot
-            if message.author.id in applicable_members.bots:
-                pass
-            else:
-
+        #Checks If the messager isn't bot
+        if message.author.id in applicable_members.bots:
+            pass
+        else:
+            try:
                 #Checks if the message is for making admin changes
                 if "give me mod" in message.content:
 
@@ -87,8 +87,27 @@ class samrid_bot:
                     #Response to f
                     elif "f" == message.content.lower():
                         await message.channel.send("f")
-        except Exception:
-            logger.exception(Exception)
+                    
+                    #Response to no u
+                    elif "no u" == message.content.lower():
+                        await message.channel.send("no u")
+                        
+            except Exception:
+                pass
+
+    
+    @client.command()
+    async def hello(ctx,*, input):
+        await ctx.send("Fuck you " + input)
+    
+    @client.command()
+    async def waifu(ctx,input=None):
+        waifu = str(random.randrange(1,10))
+        if input == None:
+            await ctx.send(ctx.author.mention + " You are " + waifu + "/10 waifu!")
+        else:
+            await ctx.send(input + " is " + waifu + "/10 waifu!")
+    
 
     #Runs the bot after compiling everything
     client.run(token)
