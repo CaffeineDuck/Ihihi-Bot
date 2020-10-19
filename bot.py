@@ -39,10 +39,11 @@ class applicable_members:
             member[player.get("xp")] = player.get("id")
 
         #List of user-id of people illegible to get Mod role
-        people = list(member.values())[:3]
+        people = list(member.values())[:2]
 
         #Returns
-        return(people, member)
+        return(people)
+
 
 
 class samrid_bot:
@@ -51,11 +52,8 @@ class samrid_bot:
 	async def on_ready():
 		print("Bot is ready")
 				
-	#Response to be given on message
-	@client.listen('on_message')
-	async def no_prefix(message):
-
-
+	@client.event
+	async def on_message(message):
 
 		#mee6API
 		mee6API = "https://mee6.xyz/api/plugins/levels/leaderboard/"+str(message.guild.id)+"?limit=999&page=0"
@@ -66,14 +64,11 @@ class samrid_bot:
 		else:
 			
 				#Checks if the message is for making admin changes
-				if "give me mod" in message.content:
+				if "give me mod" == message.content :
 
-					#Need to Run the command after getting the id 
-					func = applicable_members.api(applicable_members.people, mee6API, applicable_members.member)
-
-				
 					#Variables
-					people = func[0]
+					people = applicable_members.api(applicable_members.people, mee6API, applicable_members.member)
+					print(people)
 					person = message.author.id
 					prsn = message.author
 					role_name = applicable_members.role_name
@@ -115,20 +110,22 @@ class samrid_bot:
 						#Response to no u
 						elif "no u" == message.content.lower():
 							await message.channel.send("no u")
-
+						
+						#Response to .hello there
+						elif ".hello there" == message.content.lower() or "hello there" == message.content.lower():
+							await message.channel.send("General Kenobi")
+						
+						#Response to shh
+						elif "shh" == message.content.lower().split()[0] or ".shh" == message.content.lower().split()[0]:
+							await message.channel.send(":shushing_face:")
+						
 					except Exception:
 						pass
-
 			
+		#Send the message to command processor 
+		await client.process_commands(message)
 			
 
-	
-	@client.command()
-	async def hello(ctx,*, input = None):
-		if input == None:
-			await ctx.send("Fuck you! " + ctx.author.mention)
-		else:
-			await ctx.send("Fuck you! " + input)
 	
 	@client.command()
 	async def waifu(ctx,input=None):
@@ -151,5 +148,25 @@ class samrid_bot:
 			await ctx.send("Good Game Well Played")
 		else:
 			await ctx.send("Good Game Well Played "+input)
+
+	@client.command()
+	async def henlo(ctx, input=None):
+		if input == None:
+			await ctx.send("Fuck you! " + ctx.author.mention)
+		else:
+			await ctx.send("Fuck you! " + input )
+	
+	@client.command()
+	async def byy(ctx, input=None):
+		if input == None:
+			await ctx.send("Lonenly ass, you are lonely that you need goodnight from a bot! " + ctx.author.mention)
+		else:
+			await ctx.send("Goodbye Old Friend " + input)
+	
+	#Removed Help Command
+	client.remove_command('help')
+
+
+
 
 	client.run(token)
