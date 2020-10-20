@@ -5,6 +5,7 @@ from discord.ext import commands, tasks
 from discord.utils import get
 import datetime
 import random
+import aiohttp
 
 intents = discord.Intents.default()
 intents.members = True
@@ -118,7 +119,8 @@ class samrid_bot:
 						#Response to shh
 						elif "shh" == message.content.lower().split()[0] or ".shh" == message.content.lower().split()[0]:
 							await message.channel.send(":shushing_face:")
-						
+
+
 					except Exception:
 						pass
 			
@@ -166,7 +168,44 @@ class samrid_bot:
 	#Removed Help Command
 	client.remove_command('help')
 
+	#ROUTINE 
+	@client.command()
+	async def routine(ctx):
+		await ctx.send(file=discord.File('Images/routine.png'))
+	
+	#OOF
+	@client.command()
+	async def oof(ctx, user = None):
+		image = "https://cdn.discordapp.com/attachments/766213304846647309/768001025989935124/oof.jpg"
+		embed = discord.Embed(title="OOOOOOOFFF")
+		embed.set_image(url=image)
+		embed.set_footer(text="Sucks To Be you!" )
+		await ctx.send(embed=embed)
+		
 
-
+	
+	@client.command()
+	#Random Fox Generator
+	async def fox(ctx):
+		async with aiohttp.ClientSession() as cs:
+			async with cs.get ("https://randomfox.ca/floof/") as r:
+				data = await r.json()
+				image = data.get("image")
+		embed = discord.Embed(title="What does the fox say?")
+		embed.set_image(url=image)
+		embed.set_footer(text="https://randomfox.ca")
+		await ctx.send(embed=embed)
+	
+	@client.command()
+	#Random dog Generator
+	async def dog(ctx):
+		async with aiohttp.ClientSession() as cs:
+			async with cs.get ("https://dog.ceo/api/breeds/image/random") as r: 
+				data = await r.json()
+				image = data.get("message")
+		embed = discord.Embed(title="Henlo")
+		embed.set_image(url=image)
+		embed.set_footer(text="https://dog.ceo/")
+		await ctx.send(embed=embed)
 
 	client.run(token)
