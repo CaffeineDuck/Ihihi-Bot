@@ -7,6 +7,8 @@ import datetime
 import random
 import aiohttp
 import praw
+from PIL import Image
+from io import BytesIO
 
 reddit = praw.Reddit(client_id = "0KxXFz3MNhqqQg",
 					 client_secret = "Pz-9kbsz3Uh8PpDGJ6I_51B19Lg",
@@ -184,7 +186,12 @@ class samrid_bot:
 	#ROUTINE 
 	@client.command()
 	async def routine(ctx):
-		await ctx.send(file=discord.File('Images/routine.png'))
+		image = "https://cdn.discordapp.com/attachments/766213304846647309/768311655306100766/routine.png"
+		embed = discord.Embed(title="Routine")
+		embed.set_image(url=image)
+		embed.set_footer(text="I want to DIE!" )
+		await ctx.send(embed=embed)
+		
 	
 	#OOF
 	@client.command()
@@ -366,4 +373,53 @@ class samrid_bot:
 		
 		await ctx.send(embed=embed)
 	
+	
+	@client.command()
+	@commands.is_nsfw()
+	async def cumshot(ctx):
+		subreddit = reddit.subreddit("cumsluts")
+		all_subs = [] 
+		top = subreddit.top(limit=100)
+
+		for submission in top:
+			all_subs.append(submission)
+		
+		random_sub = random.choice(all_subs)
+
+		name = random_sub.title
+		link = random_sub.url
+
+		embed = discord.Embed(title=name)
+		embed.set_image(url=link)
+		
+		await ctx.send(embed=embed)
+	
+	@client.command()
+	async def wanted(ctx, user: discord.Member = None):
+		if user == None:
+			user = ctx.author
+		
+		wanted = Image.open('Images/wanted.jpg')
+		asset = user.avatar_url_as(size=128)
+		data = BytesIO(await asset.read())
+		pfp = Image.open(data)
+		pfp = pfp.resize((395, 395))
+		wanted.paste(pfp, (269,451))
+		wanted.save("wanted.png")
+		await ctx.send(file = discord.File("wanted.png"))
+	
+	@client.command()
+	async def hitler(ctx, user: discord.Member = None):
+		if user == None:
+			user = ctx.author
+		
+		wanted = Image.open('Images/hitler.jpg')
+		asset = user.avatar_url_as(size=128)
+		data = BytesIO(await asset.read())
+		pfp = Image.open(data)
+		pfp = pfp.resize((194, 194))
+		wanted.paste(pfp, (56,56))
+		wanted.save("hitler.png")
+		await ctx.send(file = discord.File("hitler.png"))
+
 	client.run(token)
