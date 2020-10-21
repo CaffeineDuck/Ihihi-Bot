@@ -11,6 +11,7 @@ from PIL import Image
 from io import BytesIO
 from decouple import config
 import pytz
+import os
 
 
 reddit = praw.Reddit(client_id ='0KxXFz3MNhqqQg',
@@ -75,11 +76,8 @@ class samrid_bot:
 	@client.event
 	async def on_message(message):
 
-		#mee6API
-		mee6API = "https://mee6.xyz/api/plugins/levels/leaderboard/"+str(message.guild.id)+"?limit=999&page=0"
-
 		#Checks If the messager isn't bot
-		if message.author.id in applicable_members.bots:
+		if message.author.bot == True:
 			pass
 		else:
 			#Response to imagine
@@ -102,6 +100,9 @@ class samrid_bot:
 			elif "shh" == message.content.lower().split()[0] or ".shh" == message.content.lower().split()[0]:
 				await message.channel.send(":shushing_face:")
 
+			elif ".test" == message.content:
+				await message.channel.send(message)
+				await message.channel.send(message.author)
 			
 		#Send the message to command processor 
 		await client.process_commands(message)
@@ -490,5 +491,10 @@ class samrid_bot:
 			else:
 				role = discord.utils.get(ctx.guild.roles, name=role_name)
 				await member.remove_roles(role)
+		
+				
+		# for cogs in cogss:
+		# 	client.load_extension(cogs)
+
 	client.run(token)
 	
