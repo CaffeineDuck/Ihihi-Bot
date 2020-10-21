@@ -6,6 +6,20 @@ from discord.utils import get
 import datetime
 import random
 import aiohttp
+import praw
+
+reddit = praw.Reddit(client_id = "0KxXFz3MNhqqQg",
+					 client_secret = "Pz-9kbsz3Uh8PpDGJ6I_51B19Lg",
+					 username = "Samrid_",
+					 password = "Despacito@*",
+					 user_agent = "python_praw")
+
+# subreddit = reddit.subreddit("memes")
+
+# top = subreddit.top(limit=5)
+
+# for submission in top:
+#     print(submission.title)
 
 intents = discord.Intents.default()
 intents.members = True
@@ -40,7 +54,7 @@ class applicable_members:
             member[player.get("xp")] = player.get("id")
 
         #List of user-id of people illegible to get Mod role
-        people = list(member.values())[:2]
+        people = list(member.values())[:3]
 
         #Returns
         return(people)
@@ -69,16 +83,15 @@ class samrid_bot:
 
 					#Variables
 					people = applicable_members.api(applicable_members.people, mee6API, applicable_members.member)
-					print(people)
 					person = message.author.id
 					prsn = message.author
 					role_name = applicable_members.role_name
-					peoples =[]
+					peopless =[]
 
 					# role_member = client.role_name.members
 					for user in people:
 						users = await client.fetch_user(user)
-						peoples.append(users)
+						peopless.append(users)
 					
 					#Checks if the person if applicable to get the role        
 					if str(person) in people:
@@ -86,12 +99,12 @@ class samrid_bot:
 						await prsn.add_roles(role)
 						print(str(prsn) + " Has Been given Mod Role")
 						await message.channel.send(message.author.mention + " Has been given mod role!")
-					else:
+					elif str(person) != people:
 						await message.channel.send("Get into the top 3 first motherfucker! "+message.author.mention)
 
 					#remove the roles of people who aren't applicable
 					for member in list(client.get_all_members()):
-						if member in peoples:
+						if member in peopless:
 							pass
 						else:
 							role = discord.utils.get(message.guild.roles, name=role_name)
@@ -138,7 +151,7 @@ class samrid_bot:
 			await ctx.send(input + " is " + waifu + "/10 waifu!")
 	
 	@client.command()
-	async def tata(ctx,input=None):
+	async def suk(ctx,input=None):
 		if input == None:
 			await ctx.send(ctx.author.mention + " How alone can you be to not even find a person in discord for making him/her suck your dick virtually?")
 		else:
@@ -208,4 +221,149 @@ class samrid_bot:
 		embed.set_footer(text="https://dog.ceo/")
 		await ctx.send(embed=embed)
 
+	@client.command()
+	#Memes Sender
+	async def meme(ctx):
+		subreddit = reddit.subreddit("memes")
+		all_subs = [] 
+		top = subreddit.top(limit=100)
+
+		for submission in top:
+			all_subs.append(submission)
+		
+		random_sub = random.choice(all_subs)
+
+		name = random_sub.title
+		link = random_sub.url
+
+		embed = discord.Embed(title=name)
+		embed.set_image(url=link)
+
+		await ctx.send(embed=embed)
+	
+	@client.command()
+	@commands.is_nsfw()
+	#Memes Sender
+	async def ass(ctx):
+		
+		subreddit = reddit.subreddit("ass")
+		all_subs = [] 
+		top = subreddit.top(limit=100)
+
+		for submission in top:
+			all_subs.append(submission)
+		
+		random_sub = random.choice(all_subs)
+
+		name = random_sub.title
+		link = random_sub.url
+
+		embed = discord.Embed(title=name)
+		embed.set_image(url=link)
+		
+		await ctx.send(embed=embed)
+
+	@client.command(alaises=['boobies'])
+	@commands.is_nsfw()
+	async def boobs(ctx):
+		
+		subreddit = reddit.subreddit("boobs")
+		all_subs = [] 
+		top = subreddit.top(limit=100)
+
+		for submission in top:
+			all_subs.append(submission)
+		
+		random_sub = random.choice(all_subs)
+
+		name = random_sub.title
+		link = random_sub.url
+
+		embed = discord.Embed(title=name)
+		embed.set_image(url=link)
+		
+		await ctx.send(embed=embed)
+	
+	@client.command(alaises=['r'], pass_context=True)
+	async def reddit(ctx, subrd="memes"):
+		
+		subreddit = reddit.subreddit(subrd)
+		all_subs = [] 
+		top = subreddit.top(limit=100)
+
+		for submission in top:
+			all_subs.append(submission)
+		
+		random_sub = random.choice(all_subs)
+
+		name = random_sub.title
+		link = random_sub.url
+
+		embed = discord.Embed(title=name)
+		embed.set_image(url=link)
+		
+		await ctx.send(embed=embed)
+	
+	@client.command()
+	async def cursed(ctx):
+		
+		subreddit = reddit.subreddit('cursedcomments')
+		all_subs = [] 
+		top = subreddit.top(limit=100)
+
+		for submission in top:
+			all_subs.append(submission)
+		
+		random_sub = random.choice(all_subs)
+
+		name = random_sub.title
+		link = random_sub.url
+
+		embed = discord.Embed(title=name)
+		embed.set_image(url=link)
+		
+		await ctx.send(embed=embed)
+	
+	@client.command()
+	@commands.is_nsfw()
+	async def pussy(ctx):
+		
+		subreddit = reddit.subreddit("pussy")
+		all_subs = [] 
+		top = subreddit.top(limit=100)
+
+		for submission in top:
+			all_subs.append(submission)
+		
+		random_sub = random.choice(all_subs)
+
+		name = random_sub.title
+		link = random_sub.url
+
+		embed = discord.Embed(title=name)
+		embed.set_image(url=link)
+		
+		await ctx.send(embed=embed)
+	
+	@client.command()
+	@commands.is_nsfw()
+	async def real(ctx):
+		
+		subreddit = reddit.subreddit("RealGirls")
+		all_subs = [] 
+		top = subreddit.top(limit=100)
+
+		for submission in top:
+			all_subs.append(submission)
+		
+		random_sub = random.choice(all_subs)
+
+		name = random_sub.title
+		link = random_sub.url
+
+		embed = discord.Embed(title=name)
+		embed.set_image(url=link)
+		
+		await ctx.send(embed=embed)
+	
 	client.run(token)
