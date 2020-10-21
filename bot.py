@@ -10,11 +10,11 @@ import praw
 from PIL import Image
 from io import BytesIO
 
-reddit = praw.Reddit(client_id = "0KxXFz3MNhqqQg",
-					 client_secret = "Pz-9kbsz3Uh8PpDGJ6I_51B19Lg",
-					 username = "Samrid_",
-					 password = "Despacito@*",
-					 user_agent = "python_praw")
+reddit = praw.Reddit(client_id = "",
+					 client_secret = "",
+					 username = "",
+					 password = "",
+					 user_agent = "")
 
 # subreddit = reddit.subreddit("memes")
 
