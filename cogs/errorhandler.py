@@ -10,7 +10,7 @@ class error_handler(commands.Cog):
 	"""
 	@commands.Cog.listener()
 	async def on_ready(self):
-		print("GOD HAS AWAKEN!")
+		print("GOD HAS AWOKEN!")
 
 	"""
 	This Part Handles all the errors!
