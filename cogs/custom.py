@@ -26,7 +26,7 @@ class custom(commands.Cog):
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def byy(self, ctx, input=None):
 		if input == None:
-			await ctx.send("Lonenly ass, you are lonely that you need goodnight from a bot! " + ctx.author.mention)
+			await ctx.send("Lonenly ass, you are so lonely that you need a bot to say you goodbye! :nauseated_face: " + ctx.author.mention)
 		else:
 			await ctx.send("Goodbye Old Friend " + input)
 	
@@ -58,11 +58,47 @@ class custom(commands.Cog):
 	@commands.command()
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def waifu(self, ctx, user: discord.Member = None):
-		waifu = str(random.randrange(1,10))
 		if user == None:
-			await ctx.send(ctx.author.mention + " You are " + waifu + "/10 waifu!")
+			user = ctx.author
+
+		waifu = random.randrange(1,10)
+
+		if waifu == 1 or waifu == 2:
+			emoji = ":face_vomiting:"
+		elif waifu == 3 or waifu == 4:
+			emoji = ":nauseated_face:"
+		elif waifu == 5 or waifu == 6:
+			emoji = ":cold_sweat:"
+		elif waifu == 7:
+			emoji = ":kissing:"
+		elif waifu == 8:
+			emoji = ":smirk:"
+		elif waifu == 9:
+			emoji = ":relaxed:"
+		elif waifu == 10:
+			emoji = ":heart_eyes:"
+
+		rate = f"{user.mention}, You are {str(waifu)}/10 waifu! {emoji}"
+
+		embed = discord.Embed(title = "Waifu Rate", description = rate, colour = discord.Colour.red())
+		await ctx.send(embed=embed)
+	
+	@commands.command()
+	@commands.cooldown(1, 5, commands.BucketType.user)
+	async def muji(self, ctx, user: discord.Member = None):
+		if user == None:
+			await ctx.send("Dherai bigris jatha muji!")
 		else:
-			await ctx.send(input + " is " + waifu + "/10 waifu!")
+			await ctx.send(f"Dherai bigris jatha muji! {user.mention}")
+	
+	@commands.command()
+	@commands.cooldown(1, 5, commands.BucketType.user)
+	async def routine(self, ctx):
+		image = "https://cdn.discordapp.com/attachments/766213304846647309/768311655306100766/routine.png"
+		embed = discord.Embed(title="Routine")
+		embed.set_image(url=image)
+		embed.set_footer(text="I want to DIE!" )
+		await ctx.send(embed=embed)
 
 
 def setup(bot):
