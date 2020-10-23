@@ -95,6 +95,16 @@ class custom(commands.Cog):
 	async def bobotest(self, ctx):
 		await ctx.send(".help")
 
+	@commands.command(aliases = ['gay','gayr8', 'gae'])
+	@commands.cooldown(1, 5, commands.BucketType.user)
+	async def gayrate(self, ctx, user: discord.Member = None):
+		if user == None:
+			user = ctx.author
+		gayr8 = random.randrange(1,100)
+		rate = f"{user.mention}, You are {str(gayr8)}% Gay!"
+		embed = discord.Embed(title = "Gay Rate", description = rate, colour = discord.Colour.green())
+		await ctx.send(embed=embed)
+
 
 def setup(bot):
 	bot.add_cog(custom(bot))
