@@ -23,13 +23,16 @@ Reddit sender sends the embed by reading the links in the .txt!
 linked = []
 
 async def reddit_grabber(self, subrd, ctx):
-	file = open(f"./links/{subrd}.txt","r")
+	file = open(f"./links/.{subrd}.txt","r")
 	links = file.readlines()
 	main_link = random.choice(links)
-	embed = discord.Embed(title="Free Nudes Thanks To Me :)")
+	embed = discord.Embed(title="Enjoy :)", colour = discord.Colour.green())
 	embed.set_image(url=main_link)
-	embed.set_footer(text="Jerking off Too Much Isn't Good :(")
-	await ctx.send(embed=embed)
+	embed.set_footer(text="BOII")
+	if ".jpg" in str(main_link) or '.png' in str(main_link) or ".gif" in str(main_link):
+		await ctx.send(embed=embed)
+	else:
+		await ctx.send(main_link)
 
 class NSFWcommands(commands.Cog):
 	def __init__(self, bot):

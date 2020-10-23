@@ -31,11 +31,11 @@ async def reddit_grabber():
 	for subrd in subreddits:
 		subreddit = reddit.subreddit(subrd)
 		all_subs = [] 
-		hot = subreddit.top(limit=50)
+		hot = subreddit.top(limit=100)
 		for submission in hot:
 			all_subs.append(submission)
 		
-		file = open(f"./links/{subrd}.txt","w+")
+		file = open(f"./links/.{subrd}.txt","w+")
 		for subs in all_subs:
 			file.write(f"{str(subs.url)}\n")
 		file.close()
@@ -47,7 +47,7 @@ Reddit sender sends the embed by reading the links in the .txt!
 """
 
 async def reddit_sender(self, subrd, ctx, title):
-	file = open(f"./links/{subrd}.txt","r")
+	file = open(f"./links/.{subrd}.txt","r")
 	links = file.readlines()
 	main_link = random.choice(links)
 	embed = discord.Embed(title=str(title))
