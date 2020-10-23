@@ -1,18 +1,14 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
+from itertools import cycle
+
+status = cycle(['status 1', 'status 2'])
 
 class error_handler(commands.Cog):
-	def __init__(self, bot):
-		self.bot = bot
 
 	"""
 	This part does the ON READY SHIT
 	"""
-	@commands.Cog.listener()
-	async def on_ready(self):
-		await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Your  THICC  ass"))
-		print("GOD HAS AWOKEN!")
-
 	"""
 	This Part Handles all the errors!
 	"""

@@ -1,16 +1,32 @@
-from discord.ext import commands
+from discord.ext import commands, tasks
 import discord
 import os
 from PIL import Image
 from io import BytesIO
 from decouple import config
+from itertools import cycle
+
+status = cycle(['status 1', 'status 2'])
 
 
 intents = discord.Intents.default()
 intents.members = True
-
-token = os.environ['TOKEN']
+try:
+	token = os.environ['TOKEN']
+except Exception:
+	token = config('TOKEN')
 client = commands.Bot(command_prefix=".", case_insensitive=True, intents=intents)
+
+@tasks.loop(seconds = 5)
+async def change_status():
+	await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=next(status)))
+
+@client.event
+async def on_ready():
+	change_status.start()
+	print("GOD HAS AWOKEN!")
+
+
 
 @client.command()
 async def load(ctx, extension):
