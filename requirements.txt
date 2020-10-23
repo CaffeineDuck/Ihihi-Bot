@@ -17,6 +17,7 @@ praw==7.1.0
 prawcore==1.5.0
 pylint==2.6.0
 python-decouple==3.3
+pytz==2020.1
 requests==2.24.0
 six==1.15.0
 toml==0.10.1
