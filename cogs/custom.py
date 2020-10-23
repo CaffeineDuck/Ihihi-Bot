@@ -29,16 +29,7 @@ class custom(commands.Cog):
 			await ctx.send("Lonenly ass, you are so lonely that you need a bot to say you goodbye! :nauseated_face: " + ctx.author.mention)
 		else:
 			await ctx.send("Goodbye Old Friend " + input)
-	
-	@commands.command()
-	@commands.cooldown(1, 5, commands.BucketType.user)
-	async def waifu(self, ctx,user: discord.Member = None):
-		waifu = str(random.randrange(1,10))
-		if user == None:
-			await ctx.send(ctx.author.mention + " You are " + waifu + "/10 waifu!")
-		else:
-			await ctx.send(user + " is " + waifu + "/10 waifu!")
-	
+
 	@commands.command()
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def suk(self, ctx,user: discord.Member = None):
