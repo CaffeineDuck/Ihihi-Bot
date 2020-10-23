@@ -5,11 +5,12 @@ from decouple import config
 import random
 import requests
 import aiohttp
+import os
 
 reddit = praw.Reddit(client_id ='0KxXFz3MNhqqQg',
 					 client_secret ='Pz-9kbsz3Uh8PpDGJ6I_51B19Lg',
 					 username = 'Samrid_',
-					 password = config('PASSWORD'),
+					 password = os.environ['PASSWORD'],
 					 user_agent = "python_praw")
 				
 """

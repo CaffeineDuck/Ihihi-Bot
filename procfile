@@ -1,1 +1,0 @@
-woker: python bot.py

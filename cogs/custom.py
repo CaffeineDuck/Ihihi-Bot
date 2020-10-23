@@ -90,6 +90,10 @@ class custom(commands.Cog):
 		embed.set_image(url=image)
 		embed.set_footer(text="I want to DIE!" )
 		await ctx.send(embed=embed)
+	
+	@commands.command()
+	async def bobotest(self, ctx):
+		await ctx.send(".help")
 
 
 def setup(bot):
