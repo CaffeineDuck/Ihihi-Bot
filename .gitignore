@@ -1,3 +1,5 @@
 /.env
+/.bot copy.py
 /lol.py
 /.bot_bakcup.py
+.cogs_copy/
