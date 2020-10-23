@@ -6,7 +6,7 @@ from io import BytesIO
 from decouple import config
 from itertools import cycle
 
-status = cycle(['Your THICC Ass', 'Gay Pron', '-_-', 'When you will die!'])
+status = cycle(['Your THICC Ass', 'Gay Porn', '-_-', 'When you will die!'])
 
 
 intents = discord.Intents.default()
