@@ -29,10 +29,14 @@ async def reddit_grabber(self, subrd, ctx):
 	embed = discord.Embed(title="Enjoy :)", colour = discord.Colour.green())
 	embed.set_image(url=main_link)
 	embed.set_footer(text="BOII")
-	if ".jpg" in str(main_link) or '.png' in str(main_link) or ".gif" in str(main_link):
+	if ".jpg" in str(main_link) or '.png' in str(main_link) or ".gif" in str(main_link[-4:-1]):
 		await ctx.send(embed=embed)
+	elif ".gifv" in str(main_link):
+		await ctx.send(main_link)
 	else:
 		await ctx.send(main_link)
+		
+
 
 class NSFWcommands(commands.Cog):
 	def __init__(self, bot):
@@ -41,7 +45,7 @@ class NSFWcommands(commands.Cog):
 	"""
 	NSFW COMMANDS
 	"""
-	
+
 	@commands.command()
 	@commands.cooldown(1, 1, commands.BucketType.user)
 	@commands.is_nsfw()
@@ -76,6 +80,25 @@ class NSFWcommands(commands.Cog):
 	async def cumshot(self, ctx):
 		sub = "cumsluts"
 		await reddit_grabber(self, sub, ctx)
-
+	
+	@commands.command(aliases=['cream', 'pie'])
+	@commands.is_nsfw()
+	async def creampie(self, ctx):
+		sub = "creampie"
+		await reddit_grabber(self, sub, ctx)
+	
+	@commands.command(aliases=['pgif', 'porn'])
+	@commands.is_nsfw()
+	async def porngifs(self, ctx):
+		sub = "porngifs"
+		await reddit_grabber(self, sub, ctx)
+	
+	
+	@commands.command(aliases=['creamg', 'pieg'])
+	@commands.is_nsfw()
+	async def creampiegif(self, ctx):
+		sub = "creampiegifs"
+		await reddit_grabber(self, sub, ctx)
+	
 def setup(bot):
 	bot.add_cog(NSFWcommands(bot))

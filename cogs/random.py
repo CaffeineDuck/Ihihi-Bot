@@ -20,7 +20,7 @@ reddit = praw.Reddit(client_id ='0KxXFz3MNhqqQg',
 					 user_agent = "python_praw")
 				
 
-subreddits = ['memes', 'cursedcomments', 'aww', 'ass', 'boobs', 'cumsluts', 'pussy', 'RealGirls']
+subreddits = ['memes', 'cursedcomments', 'aww', 'ass', 'boobs', 'cumsluts', 'pussy', 'RealGirls', 'porngifs', 'creampie', 'creampiegifs']
 linked = []
 
 """
@@ -31,7 +31,7 @@ async def reddit_grabber():
 	for subrd in subreddits:
 		subreddit = reddit.subreddit(subrd)
 		all_subs = [] 
-		hot = subreddit.top(limit=100)
+		hot = subreddit.hot(limit=100)
 		for submission in hot:
 			all_subs.append(submission)
 		
@@ -74,7 +74,7 @@ class Random(commands.Cog):
 		topic = "Its Not Cursed, Its just you seeing it!"
 
 		await reddit_sender(self, sub, ctx, topic)
-	
+
 	@commands.command(aliases = ['r'])
 	@commands.cooldown(1, 1, commands.BucketType.user)
 	async def reddit(self, ctx, sub = "memes"):
