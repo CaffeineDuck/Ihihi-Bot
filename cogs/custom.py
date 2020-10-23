@@ -95,9 +95,9 @@ class custom(commands.Cog):
 	async def bobotest(self, ctx):
 		await ctx.send(".help")
 
-	@commands.command()
+	@commands.command(aliases = ['gay','gayr8', 'gae'])
 	@commands.cooldown(1, 5, commands.BucketType.user)
-	async def waifu(self, ctx, user: discord.Member = None):
+	async def gayrate(self, ctx, user: discord.Member = None):
 		if user == None:
 			user = ctx.author
 		gayr8 = random.randrange(1,100)
