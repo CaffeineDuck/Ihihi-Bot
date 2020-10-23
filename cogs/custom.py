@@ -95,6 +95,16 @@ class custom(commands.Cog):
 	async def bobotest(self, ctx):
 		await ctx.send(".help")
 
+	@commands.command()
+	@commands.cooldown(1, 5, commands.BucketType.user)
+	async def waifu(self, ctx, user: discord.Member = None):
+		if user == None:
+			user = ctx.author
+		gayr8 = random.randrange(1,100)
+		rate = f"{user.mention}, You are {str(gayr8)}/100% Gay!"
+		embed = discord.Embed(title = "Waifu Rate", description = rate, colour = discord.Colour.green())
+		await ctx.send(embed=embed)
+
 
 def setup(bot):
 	bot.add_cog(custom(bot))
