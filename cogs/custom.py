@@ -102,7 +102,7 @@ class custom(commands.Cog):
 			user = ctx.author
 		gayr8 = random.randrange(1,100)
 		rate = f"{user.mention}, You are {str(gayr8)}% Gay!"
-		embed = discord.Embed(title = "Waifu Rate", description = rate, colour = discord.Colour.green())
+		embed = discord.Embed(title = "Gay Rate", description = rate, colour = discord.Colour.green())
 		await ctx.send(embed=embed)
 
 
