@@ -22,6 +22,10 @@ async def unload(ctx, extension):
 	client.unload_extension(f'cogs.{extension}')
 	await ctx.send(f'The Plugin {extension} has been disabled!')
 
+@client.command()
+async def lol(ctx):
+	await ctx.send("LMAO")
+
 
 for filename in os.listdir('./cogs'):
 	if filename.endswith('.py'):
