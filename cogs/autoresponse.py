@@ -4,12 +4,11 @@ from discord.ext import commands
 class autoresponse(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
-
+	
 	"""
 	Autoresponses like f, no u, imagine
 	"""
 	@commands.Cog.listener()
-	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def on_message(self, message):
 		"""
 		Checks if the message author is bot or now
@@ -19,8 +18,9 @@ class autoresponse(commands.Cog):
 			pass
 		else:
 		#Response to imagine
-			if "imagine" == message.content.split()[0]:
-				await message.channel.send("I can't even " + message.content +", bro!")
+			if "imagine" in message.content:
+				if "imagine" == message.content.split()[0]:
+					await message.channel.send("I can't even " + message.content +", bro!")
 
 			#Response to f
 			elif "f" == message.content.lower():

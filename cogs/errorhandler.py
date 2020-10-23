@@ -10,6 +10,7 @@ class error_handler(commands.Cog):
 	"""
 	@commands.Cog.listener()
 	async def on_ready(self):
+		await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Your  THICC  ass"))
 		print("GOD HAS AWOKEN!")
 
 	"""
