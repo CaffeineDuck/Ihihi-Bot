@@ -9,7 +9,7 @@ from decouple import config
 intents = discord.Intents.default()
 intents.members = True
 
-token = config('TOKEN')
+token = os.environ['TOKEN']
 client = commands.Bot(command_prefix=".", case_insensitive=True, intents=intents)
 
 @client.command()
