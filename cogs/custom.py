@@ -24,7 +24,7 @@ class custom(commands.Cog):
 	
 	@commands.command(aliases = ['bye'])
 	@commands.cooldown(1, 5, commands.BucketType.user)
-	async def byy(self, ctx, input=None):
+	async def byy(self, ctx, *, input=None):
 		if input == None:
 			await ctx.send("Lonenly ass, you are so lonely that you need a bot to say you goodbye! :nauseated_face: " + ctx.author.mention)
 		else:

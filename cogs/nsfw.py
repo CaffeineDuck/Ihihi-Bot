@@ -4,6 +4,7 @@ import praw
 from decouple import config
 import random
 import os
+import json
 
 try:
 	password = os.environ['PASSWORD']
@@ -23,18 +24,25 @@ Reddit sender sends the embed by reading the links in the .txt!
 linked = []
 
 async def reddit_grabber(self, subrd, ctx):
-	file = open(f"./links/.{subrd}.txt","r")
-	links = file.readlines()
-	main_link = random.choice(links)
-	embed = discord.Embed(title="Enjoy :)", colour = discord.Colour.green())
-	embed.set_image(url=main_link)
-	embed.set_footer(text="BOII")
-	if ".jpg" in str(main_link) or '.png' in str(main_link) or ".gif" in str(main_link[-4:-1]):
+	with open('.links.txt') as json_file:
+		main = []
+		data = json.load(json_file)
+		sub = data[subrd]
+		for data_list in sub:
+			main.append([data_list['Title'], data_list['Link']])
+
+	datas = random.choice(main)
+	link = datas[1]	
+	embed = discord.Embed(title = datas[0], colour = discord.Colour.green())
+	embed.set_image(url = link)
+	embed.set_footer(text=f"Requested by {ctx.author}!")
+	if ".jpg" in str(link) or '.png' in str(link) or ".gif" in str(link[-4:-1]):
 		await ctx.send(embed=embed)
-	elif ".gifv" in str(main_link):
-		await ctx.send(main_link)
+	elif ".gifv" in str(link):
+		await ctx.send(link)
 	else:
-		await ctx.send(main_link)
+		await reddit_grabber(self, subrd, ctx)
+		
 		
 
 
