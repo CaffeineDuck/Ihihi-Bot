@@ -34,7 +34,8 @@ async def reddit_grabber(self, subrd, ctx):
 	elif ".gifv" in str(main_link):
 		await ctx.send(main_link)
 	else:
-		await ctx.send(main_link)
+		await reddit_grabber(self, subrd, ctx)
+		
 		
 
 
