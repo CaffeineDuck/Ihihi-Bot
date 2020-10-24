@@ -4,3 +4,16 @@
 /.bot_bakcup.py
 .cogs_copy/
 /.gitignore
+/.links.txt
+cogs/__pycache__/background.cpython-38.pyc
+cogs/__pycache__/custom.cpython-38.pyc
+cogs/__pycache__/errorhandler.cpython-38.pyc
+cogs/__pycache__/music.cpython-38.pyc
+cogs/__pycache__/nsfw.cpython-38.pyc
+cogs/__pycache__/random.cpython-38.pyc
+links/.gitignore
+cogs/__pycache__/custom.cpython-38.pyc
+cogs/__pycache__/errorhandler.cpython-38.pyc
+cogs/__pycache__/nsfw.cpython-38.pyc
+cogs/__pycache__/random.cpython-38.pyc
+.gitignore

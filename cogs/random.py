@@ -7,6 +7,7 @@ import requests
 import aiohttp
 import os
 from itertools import cycle
+import json
 
 try:
 	password = os.environ['PASSWORD']
@@ -28,17 +29,24 @@ Reddit grabber uses saves the links of from various subreddits to a text file
 """
 @tasks.loop(seconds = 3600)
 async def reddit_grabber():
+	data = {}
 	for subrd in subreddits:
 		subreddit = reddit.subreddit(subrd)
-		all_subs = [] 
+		data[subrd] = [] 
 		hot = subreddit.hot(limit=100)
 		for submission in hot:
-			all_subs.append(submission)
-		
-		file = open(f"./links/.{subrd}.txt","w+")
-		for subs in all_subs:
-			file.write(f"{str(subs.url)}\n")
-		file.close()
+			data[subrd].append({
+				'Title': submission.title,
+				'Link': submission.url
+			})
+	with open('.links.txt', 'w+') as outfile:
+		json.dump(data, outfile)
+			
+		# file = open(f"./links/.{subrd}.txt","w+")
+		# for subs in all_subs:
+		# 	file.write(f"{str(subs.url)}\n")
+		# file.close()
+
 
 reddit_grabber.start()
 
@@ -46,14 +54,26 @@ reddit_grabber.start()
 Reddit sender sends the embed by reading the links in the .txt!
 """
 
-async def reddit_sender(self, subrd, ctx, title):
-	file = open(f"./links/.{subrd}.txt","r")
-	links = file.readlines()
-	main_link = random.choice(links)
-	embed = discord.Embed(title=str(title))
-	embed.set_image(url=main_link)
-	embed.set_footer(text=":) Reddit: Samrid_")
-	await ctx.send(embed=embed)
+async def reddit_sender(self, subrd, ctx):
+	with open('.links.txt') as json_file:
+		main = []
+		data = json.load(json_file)
+		sub = data[subrd]
+		for data_list in sub:
+			main.append([data_list['Title'], data_list['Link']])
+
+	datas = random.choice(main)
+	link = datas[1]	
+	embed = discord.Embed(title = datas[0], colour = discord.Colour.blue())
+	embed.set_image(url = link)
+	embed.set_footer(text=f"Requested by {ctx.author}!")
+	if ".jpg" in str(link) or '.png' in str(link) or ".gif" in str(link[-4:-1]):
+		await ctx.send(embed=embed)
+	elif ".gifv" in str(link):
+		await ctx.send(link)
+	else:
+		await reddit_sender(self, subrd, ctx)
+
 
 class Random(commands.Cog):
 	def __init__(self, bot):
@@ -63,17 +83,13 @@ class Random(commands.Cog):
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def meme(self, ctx):
 		sub = "memes"
-		topic = "Meme For You! <3"
-
-		await reddit_sender(self, sub, ctx, topic)
+		await reddit_sender(self, sub, ctx)
 	
 	@commands.command(aliases = ['cursedcomment', 'cursedcomments'])
 	@commands.cooldown(1, 1, commands.BucketType.user)
 	async def cursed(self, ctx):
 		sub = "cursedcomments"
-		topic = "Its Not Cursed, Its just you seeing it!"
-
-		await reddit_sender(self, sub, ctx, topic)
+		await reddit_sender(self, sub, ctx)
 
 	@commands.command(aliases = ['r'])
 	@commands.cooldown(1, 1, commands.BucketType.user)
@@ -93,8 +109,7 @@ class Random(commands.Cog):
 	@commands.cooldown(1, 1, commands.BucketType.user)
 	async def aww(self, ctx):
 		sub = "aww"
-		topic = "This may look nice but your face is ugly!"
-		await reddit_sender(self, sub, ctx, topic)
+		await reddit_sender(self, sub, ctx)
 
 	@commands.command(aliases = ['puppy', 'pup'])
 	@commands.cooldown(1, 1, commands.BucketType.user)
