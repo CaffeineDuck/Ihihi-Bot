@@ -73,6 +73,7 @@ async def reddit_sender(self, subrd, ctx):
 		await ctx.send(link)
 	else:
 		await reddit_sender(self, subrd, ctx)
+	return
 
 
 class Random(commands.Cog):
@@ -94,7 +95,6 @@ class Random(commands.Cog):
 	@commands.command(aliases = ['r'])
 	@commands.cooldown(1, 1, commands.BucketType.user)
 	async def reddit(self, ctx, sub = "memes"):
-		topic = "Fuck You"
 		subreddit = reddit.subreddit(sub)
 		all_subs = [] 
 		hot = subreddit.top(limit=50)
