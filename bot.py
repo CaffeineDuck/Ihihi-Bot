@@ -10,10 +10,6 @@ import json
 status = cycle(['Your THICC Ass', 'Gay Porn', '-_-', 'When you will die!'])
 
 
-intents = discord.Intents.default()
-intents.members = True
-client = commands.Bot(command_prefix=".", case_insensitive=True, intents=intents)
-prefix_file = "prefixes.json"
 
 def get_prefix(client,message):
 
@@ -22,12 +18,15 @@ def get_prefix(client,message):
 
 	return prefixes[str(message.guild.id)]
 
+intents = discord.Intents.default()
+intents.members = True
+client = commands.Bot(command_prefix = get_prefix, case_insensitive=True, intents=intents)
+prefix_file = "prefixes.json"
+
 try:
 	token = os.environ['TOKEN']
 except Exception:
 	token = config('TOKEN')
-	# client = commands.Bot(command_prefix="-", case_insensitive=True, intents=intents)
-	client = commands.Bot(command_prefix = get_prefix, case_insensitive=True, intents=intents)
 	prefix_file = "prefixes_test.json"
 
 
@@ -39,7 +38,7 @@ async def change_status():
 async def on_ready():
 	change_status.start()
 	print("GOD HAS AWOKEN!")
-	with open(prefix_file, "r") as f:
+	with open(prefix_file, "w+") as f:
 		prefixes = json.load(f)
 
 	for guild in client.guilds:
