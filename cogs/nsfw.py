@@ -42,6 +42,7 @@ async def reddit_grabber(self, subrd, ctx):
 		await ctx.send(link)
 	else:
 		await reddit_grabber(self, subrd, ctx)
+	return
 		
 		
 

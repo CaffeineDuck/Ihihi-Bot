@@ -17,3 +17,4 @@ cogs/__pycache__/errorhandler.cpython-38.pyc
 cogs/__pycache__/nsfw.cpython-38.pyc
 cogs/__pycache__/random.cpython-38.pyc
 .gitignore
+prefixes_test.json
