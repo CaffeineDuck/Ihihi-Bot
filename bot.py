@@ -38,7 +38,7 @@ async def change_status():
 async def on_ready():
 	change_status.start()
 	print("GOD HAS AWOKEN!")
-	with open(prefix_file, "w+") as f:
+	with open(prefix_file, "r") as f:
 		prefixes = json.load(f)
 
 	for guild in client.guilds:
