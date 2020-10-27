@@ -54,7 +54,6 @@ class NSFWcommands(commands.Cog):
 	"""
 	NSFW COMMANDS
 	"""
-
 	@commands.command()
 	@commands.cooldown(1, 1, commands.BucketType.user)
 	@commands.is_nsfw()

@@ -82,7 +82,7 @@ class admin(commands.Cog):
 		embed.add_field(name= "**Permissions**", value = permission  , inline = False)
 		embed.add_field(name= "**Acknowledgements**", value = acknowledgement  , inline = False)
 		embed.set_thumbnail(url=user.avatar_url)
-		embed.set_footer(text = f"ID: {user.id} • Today at {message_created}")
+		embed.set_footer(text = f"ID: {user.id} • RIGHT FUCKING NOW!")
 		await ctx.send(embed=embed)
 
 def setup(bot):

@@ -41,19 +41,12 @@ async def reddit_grabber():
 			})
 	with open('.links.txt', 'w+') as outfile:
 		json.dump(data, outfile)
-			
-		# file = open(f"./links/.{subrd}.txt","w+")
-		# for subs in all_subs:
-		# 	file.write(f"{str(subs.url)}\n")
-		# file.close()
-
 
 reddit_grabber.start()
 
 """
 Reddit sender sends the embed by reading the links in the .txt!
 """
-
 async def reddit_sender(self, subrd, ctx):
 	with open('.links.txt') as json_file:
 		main = []

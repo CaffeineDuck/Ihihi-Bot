@@ -6,9 +6,9 @@ status = cycle(['status 1', 'status 2'])
 
 class error_handler(commands.Cog):
 
-	"""
-	This part does the ON READY SHIT
-	"""
+	def __init__(self, bot):
+		self.bot = bot
+	
 	"""
 	This Part Handles all the errors!
 	"""
@@ -27,6 +27,8 @@ class error_handler(commands.Cog):
 			await ctx.send("Please add the missing arguments!")
 		elif isinstance(error, commands.CommandOnCooldown):
 			await ctx.send(f"Wait for a while dumbass! {ctx.author.mention} {error}.")
+		elif "error code: 50013" in str(error):
+			await ctx.send(f"Please ensure that {self.bot.user.mention} has required permissions and has its role above the other roles to be added!")
 		elif isinstance(error, commands.CommandInvokeError):
 			await ctx.send(error)
 		else:
