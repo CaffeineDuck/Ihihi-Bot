@@ -105,6 +105,14 @@ class custom(commands.Cog):
 		embed = discord.Embed(title = "Gay Rate", description = rate, colour = discord.Colour.green())
 		await ctx.send(embed=embed)
 
+	@commands.command()
+	async def anyone(self, ctx,*, input = None):
+		members = ctx.guild.members
+		member = random.choice(members)
+		if input == None:
+			await ctx.send(f"{member.mention} is the chosen one!")
+		else:
+			await ctx.send(f"{member.mention} is chosen to {input}")
 
 def setup(bot):
 	bot.add_cog(custom(bot))
