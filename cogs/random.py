@@ -74,7 +74,7 @@ class Random(commands.Cog):
 		self.bot = bot
 
 	@commands.command(aliases = ['memes'])
-	@commands.cooldown(1, 5, commands.BucketType.user)
+	@commands.cooldown(1, 1, commands.BucketType.user)
 	async def meme(self, ctx):
 		sub = "memes"
 		await reddit_sender(self, sub, ctx)
