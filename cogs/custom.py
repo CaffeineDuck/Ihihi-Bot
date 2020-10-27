@@ -2,6 +2,15 @@ import discord
 from discord.ext import commands
 import random
 
+member = []
+
+async def randoms(members):
+	for membere in members:
+		if membere.bot == False:
+			member.append(membere)
+	person = random.choice(member)
+	return person
+
 class custom(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
@@ -108,11 +117,15 @@ class custom(commands.Cog):
 	@commands.command()
 	async def anyone(self, ctx,*, input = None):
 		members = ctx.guild.members
-		member = random.choice(members)
+		member = await randoms(members)
+		
 		if input == None:
 			await ctx.send(f"{member.mention} is the chosen one!")
 		else:
-			await ctx.send(f"{member.mention} is chosen to {input}")
+			await ctx.send(f"{member} is chosen to {input}")
+	
 
+
+	
 def setup(bot):
 	bot.add_cog(custom(bot))
