@@ -8,7 +8,7 @@ This bot is a Simple yet Advanced bot to be used for custom servers. I made this
 2. Enable your Virtual Environment. (Optional)
 3. Run this command `pip install -r requirements.txt` 
 4. Goto https://www.reddit.com/prefs/apps and make a new app *(Script)*.
-5. Goto https://cloud.mongodb.com/ and make signup.
+5. Goto https://cloud.mongodb.com/ and signup.
 6. Then select MongoDB Atlas while creating a organization and then name your organization anything you want.
 7. Now create a new project *(name it whatever you want)*.
 8. Now create a cluster and select the shared cluster.
