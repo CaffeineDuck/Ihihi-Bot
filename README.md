@@ -2,7 +2,10 @@
 
 This bot is a Simple yet Advanced bot to be used for custom servers. I made this so that I can use it with my friends in my server, but as it has many features; I have made the repo public so that you are able to use it. :)
 
-## How to use the bot (Locally)?
+# Try out the bot for yourself :)!
+https://discord.com/api/oauth2/authorize?client_id=767279203267379280&permissions=8&scope=bot
+
+## How to host the bot (Locally)?
 **I AM EXPECTING ANYONE USING THIS CODE TO HAVE A DISCORD BOT TOKEN *(OR ATLEAST KNOW HOW TO MAKE A BOT AND GET ITS TOKEN)* AND A BASIC PYTHON KNOWLEDGE!**
 1. Clone this repo in your local machine.
 2. Enable your Virtual Environment. (Optional)
