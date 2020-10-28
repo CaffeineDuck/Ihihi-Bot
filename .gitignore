@@ -18,3 +18,5 @@ cogs/__pycache__/nsfw.cpython-38.pyc
 cogs/__pycache__/random.cpython-38.pyc
 .gitignore
 prefixes_test.json
+links.json
+test.py
