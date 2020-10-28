@@ -39,7 +39,7 @@ ID=<YOUR PRAW APP ID>``
 *(If you get any errors, add the problem in issues.)*
 
 ## How to host the bot on heroku?
-**I use a testing bot for local machine and the main bot runs on heroku, so there will be different databases the bot (locally and on heroku) if you don't want that just goto bot.py and remove line 42 or this code `prefixes = db.server_test_prefixes`.
+**I use a testing bot for local machine and the main bot runs on heroku, so there will be different databases the bot (locally and on heroku) if you don't want that just goto bot.py and remove line 42 or this code `prefixes = db.server_test_prefixes`.**
 1. Do every step how to host the bot locally.
 2. Goto heroku and make one app.
 3. Goto the settings page and then add python build pack.
