@@ -24,7 +24,7 @@ Reddit sender sends the embed by reading the links in the .txt!
 linked = []
 
 async def reddit_grabber(self, subrd, ctx):
-	with open('.links.txt') as json_file:
+	with open('links.json') as json_file:
 		main = []
 		data = json.load(json_file)
 		sub = data[subrd]
@@ -54,7 +54,6 @@ class NSFWcommands(commands.Cog):
 	"""
 	NSFW COMMANDS
 	"""
-
 	@commands.command()
 	@commands.cooldown(1, 1, commands.BucketType.user)
 	@commands.is_nsfw()

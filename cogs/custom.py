@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 import random
 
+member = []
+
 class custom(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
@@ -18,9 +20,9 @@ class custom(commands.Cog):
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def henlo(self, ctx, input=None):
 		if input == None:
-			await ctx.send("Fuck you! " + ctx.author.mention)
+			await ctx.send(f"Fuck you! {ctx.author.mention}")
 		else:
-			await ctx.send("Fuck you! " + input )
+			await ctx.send(f"Fuck you {input}!")
 	
 	@commands.command(aliases = ['bye'])
 	@commands.cooldown(1, 5, commands.BucketType.user)
@@ -28,15 +30,15 @@ class custom(commands.Cog):
 		if input == None:
 			await ctx.send("Lonenly ass, you are so lonely that you need a bot to say you goodbye! :nauseated_face: " + ctx.author.mention)
 		else:
-			await ctx.send("Goodbye Old Friend " + input)
+			await ctx.send(f"Goodbye Old Friend {input}")
 
 	@commands.command()
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def suk(self, ctx,user: discord.Member = None):
 		if user == None:
-			await ctx.send(ctx.author.mention + " How alone can you be to not even find a person in discord for making him/her suck your dick virtually?")
+			await ctx.send(f"{ctx.author.mention} How alone can you be to not even find a person in discord for making him/her suck your dick virtually?")
 		else:
-			await ctx.send(user.mention + " Suck " + ctx.author.mention + "'s Dick!")
+			await ctx.send(f"{user.mention} Suck {ctx.author.mention}'s DICK!")
 	
 	@commands.command()
 	@commands.cooldown(1, 5, commands.BucketType.user)
@@ -44,7 +46,7 @@ class custom(commands.Cog):
 		if user == None:
 			await ctx.send("Good Game Well Played")
 		else:
-			await ctx.send("Good Game Well Played "+user.mention)
+			await ctx.send(f"Good Game Well Played {user.mention}")
 	
 	@commands.command()
 	@commands.cooldown(1, 5, commands.BucketType.user)
@@ -90,10 +92,6 @@ class custom(commands.Cog):
 		embed.set_image(url=image)
 		embed.set_footer(text="I want to DIE!" )
 		await ctx.send(embed=embed)
-	
-	@commands.command()
-	async def bobotest(self, ctx):
-		await ctx.send(".help")
 
 	@commands.command(aliases = ['gay','gayr8', 'gae'])
 	@commands.cooldown(1, 5, commands.BucketType.user)
@@ -105,6 +103,18 @@ class custom(commands.Cog):
 		embed = discord.Embed(title = "Gay Rate", description = rate, colour = discord.Colour.green())
 		await ctx.send(embed=embed)
 
+	@commands.command()
+	async def anyone(self, ctx,*, input = None):
+		guild_members = ctx.guild.members
+		members = [member for member in guild_members if member.bot == False ]
+		member = random.choice(members)
+		if input == None:
+			await ctx.send(f"{member.mention} is the chosen one!")
+		else:
+			await ctx.send(f"{member.mention} is chosen to {input}")
+	
 
+
+	
 def setup(bot):
 	bot.add_cog(custom(bot))

@@ -25,7 +25,7 @@ subreddits = ['memes', 'cursedcomments', 'aww', 'ass', 'boobs', 'cumsluts', 'pus
 linked = []
 
 """
-Reddit grabber uses saves the links of from various subreddits to a text file
+Reddit grabber uses saves the links of from various subreddits to a json file
 """
 @tasks.loop(seconds = 3600)
 async def reddit_grabber():
@@ -39,23 +39,16 @@ async def reddit_grabber():
 				'Title': submission.title,
 				'Link': submission.url
 			})
-	with open('.links.txt', 'w+') as outfile:
-		json.dump(data, outfile)
-			
-		# file = open(f"./links/.{subrd}.txt","w+")
-		# for subs in all_subs:
-		# 	file.write(f"{str(subs.url)}\n")
-		# file.close()
-
+	with open('links.json', 'w') as file:
+		json.dump(data, file)
 
 reddit_grabber.start()
 
 """
-Reddit sender sends the embed by reading the links in the .txt!
+Reddit sender sends the embed by reading the links in the json!
 """
-
 async def reddit_sender(self, subrd, ctx):
-	with open('.links.txt') as json_file:
+	with open('links.json') as json_file:
 		main = []
 		data = json.load(json_file)
 		sub = data[subrd]
@@ -81,7 +74,7 @@ class Random(commands.Cog):
 		self.bot = bot
 
 	@commands.command(aliases = ['memes'])
-	@commands.cooldown(1, 5, commands.BucketType.user)
+	@commands.cooldown(1, 1, commands.BucketType.user)
 	async def meme(self, ctx):
 		sub = "memes"
 		await reddit_sender(self, sub, ctx)
