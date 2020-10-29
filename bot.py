@@ -6,6 +6,7 @@ import json
 import pymongo
 import motor
 from dotenv import load_dotenv
+from flask_site import keep_alive
 
 
 """
@@ -90,6 +91,7 @@ async def on_ready():
 		change_status.start()
 	except Exception:
 		pass
+	star()
 	print("GOD HAS AWOKEN!")
 	star()
 	
@@ -202,6 +204,6 @@ for filename in os.listdir('./cogs'):
 	if filename.endswith('.py'):
 		client.load_extension(f"cogs.{filename[:-3]}")
 
-
+keep_alive()
 client.run(token)
 	

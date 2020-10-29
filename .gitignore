@@ -20,3 +20,4 @@ cogs/__pycache__/random.cpython-38.pyc
 prefixes_test.json
 links.json
 test.py
+__pycache__/

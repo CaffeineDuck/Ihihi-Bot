@@ -95,6 +95,12 @@ class NSFWcommands(commands.Cog):
 	async def creampiegif(self, ctx):
 		sub = "creampiegifs"
 		await reddit_grabber(self, sub, ctx)
+
+	@commands.command(aliases=['onechan', 'onnichan'])
+	@commands.is_nsfw()
+	async def hentai(self, ctx):
+		sub = "hentai"
+		await reddit_grabber(self, sub, ctx)
 	
 def setup(bot):
 	bot.add_cog(NSFWcommands(bot))
