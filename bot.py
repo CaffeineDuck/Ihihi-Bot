@@ -1,7 +1,6 @@
 from discord.ext import commands, tasks
 import discord
 import os
-from decouple import config
 from itertools import cycle
 import json	
 import pymongo
@@ -9,16 +8,31 @@ import motor
 from dotenv import load_dotenv
 
 """
-Loads all the files from .env
-"""
-load_dotenv()
-
-
-"""
 Prints "-------------------------"
 """
 def star():
 	print("-----------------------------------------------")
+
+
+"""
+Checks if it is in a local machine
+"""
+try:
+	import test
+	is_local = True
+	star()
+	print("The Bot Is Being Hosted Locally")
+	star()
+except Exception:
+	star()
+	print("The Bot Is Not Being Hosted Locally")
+	star()
+	is_local = False
+
+"""
+Loads all the files from .env
+"""
+load_dotenv()
 
 
 """
@@ -33,22 +47,10 @@ Mongo Db
 mongoclient = os.environ['MONGOCLIENT']
 bot = pymongo.MongoClient(mongoclient)
 db = bot.ihihihibot_db
-prefixes = db.server_prefixes
-
-
-"""
-Tests if it is being hosted on local machine or heroku
-"""
-try:
-	token = config('TOKEN')
+if is_local:
 	prefixes = db.server_test_prefixes
-	star()
-	print("The bot is being hosted in local machine")
-	star()
-except Exception:
-	star()
-	print("The bot is being hosted on heroku")
-	star()
+else:
+	prefixes = db.server_prefixes
 
 
 """
@@ -81,6 +83,7 @@ It initializes all the background tasks as soon as it is ready!
 """
 @client.event
 async def on_ready():
+	
 	try:
 		change_status.start()
 	except Exception:
