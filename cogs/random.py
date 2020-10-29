@@ -9,16 +9,13 @@ import os
 from itertools import cycle
 import json
 
-try:
-	password = os.environ['PASSWORD']
-	client_id = os.environ['ID']
-	username = os.environ['REDDIT_USERNAME']
-	client_secret = os.environ['SECRET']
-except Exception:
-	password = config('PASSWORD')
-	client_id = config('ID')
-	username = config('REDDIT_USERNAME')
-	client_secret = config('SECRET')
+"""
+Environment Variables
+"""
+password = os.environ['PASSWORD']
+client_id = os.environ['ID']
+username = os.environ['REDDIT_USERNAME']
+client_secret = os.environ['SECRET']
 
 
 reddit = praw.Reddit(client_id = client_id,
