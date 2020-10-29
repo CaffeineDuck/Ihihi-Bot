@@ -7,22 +7,6 @@ import os
 import json
 
 """
-Environment Variables
-"""
-password = os.environ['PASSWORD']
-client_id = os.environ['ID']
-username = os.environ['REDDIT_USERNAME']
-client_secret = os.environ['SECRET']
-
-
-reddit = praw.Reddit(client_id = client_id,
-					 client_secret = client_secret,
-					 username = username,
-					 password = password,
-					 user_agent = "Ihihihi")
-				
-
-"""
 Reddit sender sends the embed by reading the links in the .txt!
 """
 linked = []
