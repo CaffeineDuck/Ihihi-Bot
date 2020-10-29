@@ -11,7 +11,7 @@ class custom(commands.Cog):
 	@commands.command()
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def gn(self, ctx, user: discord.Member = None):
-		if user == None:
+		if not user:
 			await ctx.send("Get Naked!")
 		else:
 			await ctx.send("Get Naked!" + user.mention)
@@ -19,7 +19,7 @@ class custom(commands.Cog):
 	@commands.command()
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def henlo(self, ctx, input=None):
-		if input == None:
+		if not input:
 			await ctx.send(f"Fuck you! {ctx.author.mention}")
 		else:
 			await ctx.send(f"Fuck you {input}!")
@@ -27,7 +27,7 @@ class custom(commands.Cog):
 	@commands.command(aliases = ['bye'])
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def byy(self, ctx, *, input=None):
-		if input == None:
+		if not input:
 			await ctx.send("Lonenly ass, you are so lonely that you need a bot to say you goodbye! :nauseated_face: " + ctx.author.mention)
 		else:
 			await ctx.send(f"Goodbye Old Friend {input}")
@@ -35,7 +35,7 @@ class custom(commands.Cog):
 	@commands.command()
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def suk(self, ctx,user: discord.Member = None):
-		if user == None:
+		if not user:
 			await ctx.send(f"{ctx.author.mention} How alone can you be to not even find a person in discord for making him/her suck your dick virtually?")
 		else:
 			await ctx.send(f"{user.mention} Suck {ctx.author.mention}'s DICK!")
@@ -43,7 +43,7 @@ class custom(commands.Cog):
 	@commands.command()
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def gg(self, ctx, user: discord.Member = None):
-		if user == None:
+		if not user:
 			await ctx.send("Good Game Well Played")
 		else:
 			await ctx.send(f"Good Game Well Played {user.mention}")
@@ -51,7 +51,7 @@ class custom(commands.Cog):
 	@commands.command()
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def waifu(self, ctx, user: discord.Member = None):
-		if user == None:
+		if not user:
 			user = ctx.author
 
 		waifu = random.randrange(1,10)
@@ -79,7 +79,7 @@ class custom(commands.Cog):
 	@commands.command()
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def muji(self, ctx, user: discord.Member = None):
-		if user == None:
+		if not user:
 			await ctx.send("Dherai bigris jatha muji!")
 		else:
 			await ctx.send(f"Dherai bigris jatha muji! {user.mention}")
@@ -106,7 +106,7 @@ class custom(commands.Cog):
 	@commands.command()
 	async def anyone(self, ctx,*, input = None):
 		guild_members = ctx.guild.members
-		members = [member for member in guild_members if member.bot == False ]
+		members = [member for member in guild_members if not member.bot]
 		member = random.choice(members)
 		if input == None:
 			await ctx.send(f"{member.mention} is the chosen one!")

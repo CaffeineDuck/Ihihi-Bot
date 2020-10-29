@@ -11,14 +11,21 @@ import json
 
 try:
 	password = os.environ['PASSWORD']
+	client_id = os.environ['ID']
+	username = os.environ['REDDIT_USERNAME']
+	client_secret = os.environ['SECRET']
 except Exception:
 	password = config('PASSWORD')
+	client_id = config('ID')
+	username = config('REDDIT_USERNAME')
+	client_secret = config('SECRET')
 
-reddit = praw.Reddit(client_id ='0KxXFz3MNhqqQg',
-					 client_secret ='Pz-9kbsz3Uh8PpDGJ6I_51B19Lg',
-					 username = 'Samrid_',
+
+reddit = praw.Reddit(client_id = client_id,
+					 client_secret = client_secret,
+					 username = username,
 					 password = password,
-					 user_agent = "python_praw")
+					 user_agent = "Ihihihi")
 				
 
 subreddits = ['memes', 'cursedcomments', 'aww', 'ass', 'boobs', 'cumsluts', 'pussy', 'RealGirls', 'porngifs', 'creampie', 'creampiegifs']
