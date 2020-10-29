@@ -7,6 +7,13 @@ import pymongo
 import motor
 from dotenv import load_dotenv
 
+
+"""
+Loads all the files from .env
+"""
+load_dotenv()
+
+
 """
 Prints "-------------------------"
 """
@@ -18,21 +25,16 @@ def star():
 Checks if it is in a local machine
 """
 try:
-	import test
+	print(os.environ['TEST'])
 	is_local = True
 	star()
-	print("The Bot Is Being Hosted Locally")
+	print("The Bot Is Being Hosted Locally (On Samrid's PC)")
 	star()
 except Exception:
 	star()
-	print("The Bot Is Not Being Hosted Locally")
+	print("The Bot Is Not Being Hosted Locally (NOT ON SAMRID's PC)")
 	star()
 	is_local = False
-
-"""
-Loads all the files from .env
-"""
-load_dotenv()
 
 
 """
