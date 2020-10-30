@@ -1,11 +1,9 @@
 import discord
 from discord.ext import commands, tasks
-import praw 
 import random
 import requests
 import aiohttp
 import os
-from itertools import cycle
 import json
 
 """
