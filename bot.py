@@ -1,11 +1,42 @@
 from discord.ext import commands, tasks
 import discord
 import os
-from decouple import config
 from itertools import cycle
 import json	
 import pymongo
 import motor
+from dotenv import load_dotenv
+# from flask_site import keep_alive
+
+
+"""
+Loads all the files from .env
+"""
+load_dotenv()
+
+
+"""
+Prints "-------------------------"
+"""
+def star():
+	print("-----------------------------------------------")
+
+
+"""
+Checks if it is in a local machine
+"""
+try:
+	print(os.environ['TEST'])
+	is_local = True
+	star()
+	print("The Bot Is Being Hosted Locally (On Samrid's PC)")
+	star()
+except Exception:
+	star()
+	print("The Bot Is Not Being Hosted Locally (NOT ON SAMRID's PC)")
+	star()
+	is_local = False
+
 
 """
 Statuses
@@ -14,32 +45,15 @@ status = cycle(['Your THICC Ass', 'Gay Porn', '-_-', 'When you will die!'])
 
 
 """
-As bot is hosted in heroku I have made one testing bot so it 
-chooses the collection based on where it is hosted!
-"""
-try:
-	mongoclient = os.environ['MONGOCLIENT']
-except Exception:
-	mongoclient = config('MONGOCLIENT')
-
-
-"""
 Mongo Db
 """
+mongoclient = os.environ['MONGOCLIENT']
 bot = pymongo.MongoClient(mongoclient)
 db = bot.ihihihibot_db
-prefixes = db.server_prefixes
-
-
-"""
-As bot is hosted in heroku I have made one testing bot so it 
-chooses the token based on where it is hosted!
-"""
-try:
-	token = os.environ['TOKEN']
-except Exception:
-	token = config('TOKEN')
+if is_local:
 	prefixes = db.server_test_prefixes
+else:
+	prefixes = db.server_prefixes
 
 
 """
@@ -49,10 +63,10 @@ def get_prefix(client,message):
 	cur = prefixes.find_one({'server_id':message.guild.id})
 	return(cur.get('prefix'))
 
-
 """
 Discord.py Variables
 """
+token = os.environ['TOKEN']
 defualt_prefix = "."
 intents = discord.Intents.default()
 intents.members = True
@@ -72,11 +86,14 @@ It initializes all the background tasks as soon as it is ready!
 """
 @client.event
 async def on_ready():
+	
 	try:
 		change_status.start()
 	except Exception:
 		pass
+	star()
 	print("GOD HAS AWOKEN!")
+	star()
 	
 	for guild in client.guilds:
 		
@@ -88,7 +105,7 @@ async def on_ready():
 			}
 			prefixes.insert_one(perfix_data)
 			print(f"Prefix for server id {guild.id} has been created!")			
-
+			star()
 """
 Loads the cogs
 """
@@ -96,6 +113,7 @@ Loads the cogs
 async def load(ctx, extension):
 	client.load_extension(f'cogs.{extension}')
 	await ctx.send(f'The Plugin {extension} has been enabled!')
+
 
 """
 unloads the cogs
@@ -105,14 +123,16 @@ async def unload(ctx, extension):
 	client.unload_extension(f'cogs.{extension}')
 	await ctx.send(f'The Plugin {extension} has been disabled!')
 
+
 """
-reoads the cogs
+Reloads the cogs
 """
 @client.command()
 async def reload(ctx, extension):
 	client.unload_extension(f'cogs.{extension}')
 	client.load_extension(f'cogs.{extension}')
 	await ctx.send(f"The Plugin {extension} has been reloaded!")
+
 
 """
 It updates the database whenever it joins a new guild!
@@ -127,6 +147,8 @@ async def on_guild_join(guild):
 			}
 			prefixes.insert_one(perfix_data)
 			print(f"Prefix for server id {guild.id} has been created!")
+			star()
+
 
 """
 On message event (Whenever a message is written!)
@@ -134,13 +156,14 @@ On message event (Whenever a message is written!)
 @client.event
 async def on_message(msg):
 	try:
-		if msg.mentions[0] == client.user and msg.author.bot == False:
+		if msg.mentions[0] == client.user and not msg.author.bot:
 			cur = prefixes.find_one({'server_id':msg.guild.id})
 			pre = cur.get('prefix')
 			await msg.channel.send(f"My prefix for this server is `{pre}`")
 	except:
 		pass
 	await client.process_commands(msg)
+
 
 """
 Changes the prefix for that server by updating the database!
@@ -164,7 +187,9 @@ async def changeprefix(ctx,*, prefix):
 
 	prefixes.update_one(old_data, new_data)
 	print(f"Prefix for the server {ctx.guild.id} has been updated to '{prefix}' !")
+	star()
 	await ctx.send(f"The prefix was changed to {prefix}")
+
 
 """
 Gives you the prefix for the guild you are in!
@@ -179,6 +204,6 @@ for filename in os.listdir('./cogs'):
 	if filename.endswith('.py'):
 		client.load_extension(f"cogs.{filename[:-3]}")
 
-
+# keep_alive()
 client.run(token)
 	

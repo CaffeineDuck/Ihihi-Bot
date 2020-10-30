@@ -6,18 +6,6 @@ import random
 import os
 import json
 
-try:
-	password = os.environ['PASSWORD']
-except Exception:
-	password = config('PASSWORD')
-
-reddit = praw.Reddit(client_id ='0KxXFz3MNhqqQg',
-					 client_secret ='Pz-9kbsz3Uh8PpDGJ6I_51B19Lg',
-					 username = 'Samrid_',
-					 password = password,
-					 user_agent = "python_praw")
-
-
 """
 Reddit sender sends the embed by reading the links in the .txt!
 """
@@ -106,6 +94,12 @@ class NSFWcommands(commands.Cog):
 	@commands.is_nsfw()
 	async def creampiegif(self, ctx):
 		sub = "creampiegifs"
+		await reddit_grabber(self, sub, ctx)
+
+	@commands.command(aliases=['onechan', 'onnichan'])
+	@commands.is_nsfw()
+	async def hentai(self, ctx):
+		sub = "hentai"
 		await reddit_grabber(self, sub, ctx)
 	
 def setup(bot):

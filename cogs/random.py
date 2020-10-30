@@ -1,48 +1,12 @@
 import discord
 from discord.ext import commands, tasks
 import praw 
-from decouple import config
 import random
 import requests
 import aiohttp
 import os
 from itertools import cycle
 import json
-
-try:
-	password = os.environ['PASSWORD']
-except Exception:
-	password = config('PASSWORD')
-
-reddit = praw.Reddit(client_id ='0KxXFz3MNhqqQg',
-					 client_secret ='Pz-9kbsz3Uh8PpDGJ6I_51B19Lg',
-					 username = 'Samrid_',
-					 password = password,
-					 user_agent = "python_praw")
-				
-
-subreddits = ['memes', 'cursedcomments', 'aww', 'ass', 'boobs', 'cumsluts', 'pussy', 'RealGirls', 'porngifs', 'creampie', 'creampiegifs']
-linked = []
-
-"""
-Reddit grabber uses saves the links of from various subreddits to a json file
-"""
-@tasks.loop(seconds = 3600)
-async def reddit_grabber():
-	data = {}
-	for subrd in subreddits:
-		subreddit = reddit.subreddit(subrd)
-		data[subrd] = [] 
-		hot = subreddit.hot(limit=100)
-		for submission in hot:
-			data[subrd].append({
-				'Title': submission.title,
-				'Link': submission.url
-			})
-	with open('links.json', 'w') as file:
-		json.dump(data, file)
-
-reddit_grabber.start()
 
 """
 Reddit sender sends the embed by reading the links in the json!
