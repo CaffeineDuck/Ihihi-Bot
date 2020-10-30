@@ -25,13 +25,13 @@ https://discord.com/api/oauth2/authorize?client_id=767279203267379280&permission
 16. Now paste the value that you obtained from mongodb and python praw as given in the image and the code below:
 
 ``PASSWORD=<YOUR REDDIT PASSWORD>
-USERNAME=<YOUR REDDIT USERNAME>
+REDDIT_USERNAME=<YOUR REDDIT USERNAME>
 TOKEN=<YOUR BOT TOKEN>
 MONGOCLIENT=<YOUR LINK YOU GOT FROM MONGODB>
 SECRET=<YOUR PRAW SECRET>
 ID=<YOUR PRAW APP ID>``
 
-![Add the variables you have in this format](https://i.ibb.co/rxwvNjx/env.png)
+![Add the variables you have in this format](https://i.ibb.co/SR9QvFR/env.png)
 
 17. Replace the `<dbname>` in your mongodb code with `test` in `.env` file.
 18. Goto https://www.urlencoder.org/ and convert your password for mongodb to url encoded text.
