@@ -4,7 +4,6 @@ import os
 from itertools import cycle
 import json	
 import pymongo
-import motor
 from dotenv import load_dotenv
 import sys
 # from flaskSite import keep_alive
@@ -51,6 +50,10 @@ Mongo Db
 mongoclient = os.environ['MONGOCLIENT']
 bot = pymongo.MongoClient(mongoclient)
 db = bot.ihihihibot_db
+"""
+As I host my bot, i have a testing bot and a main bot so it 
+fetches the prefix from database according to where its hosted!
+"""
 if is_local:
 	prefixes = db.server_test_prefixes
 else:
@@ -174,6 +177,9 @@ async def prefix(ctx):
 	prefix = cur.get('prefix')
 	await ctx.send(f"My prefix for this server is {prefix}")
 
+"""
+Loads all the cogs from /cogs directory
+"""
 if __name__ == "__main__":
 	for filename in os.listdir('./cogs'):
 		if filename.endswith('.py'):
