@@ -3,6 +3,13 @@ from discord.ext import commands, tasks
 import os
 import json
 import praw
+from itertools import cycle
+
+"""
+Prints "-------------------------"
+"""
+def star():
+	print("-----------------------------------------------")
 
 
 reddit = praw.Reddit(client_id = os.environ['ID'],
@@ -44,7 +51,7 @@ reddit_grabber.start()
 class Background(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
-
+		
 	'''
 	I don't know OOP(Object oriented programming) :( so had to do this in this way!
 	Will improve the code with time :)!
