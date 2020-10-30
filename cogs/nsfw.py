@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 import praw 
-from decouple import config
 import random
 import os
 import json
