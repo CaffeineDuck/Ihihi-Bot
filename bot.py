@@ -78,6 +78,12 @@ client = commands.Bot(command_prefix = get_prefix, case_insensitive=True, intent
 
 
 """
+Removes the Help Command
+"""
+client.remove_command('help')
+
+
+"""
 This Background task loops every 1 hour and changes the status!
 """
 @tasks.loop(seconds = 3600)
@@ -165,7 +171,7 @@ async def changeprefix(ctx,*, prefix):
 	prefixes.update_one(old_data, new_data)
 	print(f"Prefix for the server {ctx.guild.id} has been updated to '{prefix}' !")
 	star()
-	await ctx.send(f"The prefix was changed to {prefix}")
+	await ctx.send(f"The prefix was changed to `{prefix}`")
 
 
 """
