@@ -148,10 +148,14 @@ class custom(commands.Cog):
 		embed.set_image(url = random_link)
 		await ctx.send(embed = embed)
 
-	@commands.command(aliases=['s'])
+	@commands.command(aliases=['s', 'say'])
 	@commands.has_permissions(kick_members = True)
 	async def send(self, ctx, member : discord.Member, *, message = "No reason provided"):
-		await member.send(message)
+		try:
+			await member.send(message)
+		except Exception:
+			await ctx.send(f'{member.mention} has his/her DMs closed. :(')
+
 	
 	
 def setup(bot):
