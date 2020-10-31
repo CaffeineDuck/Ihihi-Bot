@@ -48,7 +48,8 @@ class Help(commands.Cog):
                 2. Fun Commands | `{prefix}help fun`\n
                 3. Random Commands | `{prefix}help random`\n
                 4. Other Commands | `{prefix}help other`\n
-                5. NSFW Commands | `{prefix}help nsfw` \n
+                5. Magik Commands | `{prefix}help magik`\n
+                6. NSFW Commands | `{prefix}help nsfw` \n
                 """)
             else:
                 embed.add_field(name= "Command categories are given below...",
@@ -58,8 +59,9 @@ class Help(commands.Cog):
                 2. Fun Commands | `{prefix}help fun`\n
                 3. Random Commands | `{prefix}help random`\n
                 4. Other Commands | `{prefix}help other`\n
+                5. Magik Commands | `{prefix}help magik`\n
                 """)
-            embed.set_footer(text=f'Example: {prefix}help mod | Requested by {ctx.author}', icon_url='')
+            embed.set_footer(text = f'Requested by {ctx.author}', icon_url='')
             await ctx.send(embed=embed)
 
     @help.command(aliases=['others', 'other', 'other commands', 'Others'])
@@ -234,6 +236,29 @@ class Help(commands.Cog):
         embed.add_field(
             name=f"anyone | `{prefix}anyone` | `{prefix}anyone <text>`",
             value="Chooses a radom person in the server.", inline= False)
+        embed.set_footer(text=f'Requested by {ctx.author}')
+        await ctx.send(embed=embed)
+
+    @help.command(aliases = ['magik'])
+    async def MagikCommands(self, ctx):
+        cur = self.prefixes.find_one({'server_id':ctx.guild.id})
+        prefix = cur.get('prefix')
+        cur = self.prefixes.find_one({'server_id':ctx.guild.id})
+        prefix = cur.get('prefix')
+        embed = discord.Embed(
+        title = "Magik Commands",
+        description = "All the magik commands are listed below :-",
+        timestamp = ctx.message.created_at,
+        colour = discord.Colour.gold())
+        embed.set_thumbnail(url='')
+
+        embed.add_field(
+            name=f'{prefix}hitler | `{prefix}hitler <user>`',
+            value="Adds the mentioned user's pfp in worse than hitler image.", inline= False)
+        embed.add_field(
+            name=f'{prefix}wanted | `{prefix}wanted <user>`',
+            value="Adds the mentioned user's pfp in wanted image.", inline= False)
+        
         embed.set_footer(text=f'Requested by {ctx.author}')
         await ctx.send(embed=embed)
     
