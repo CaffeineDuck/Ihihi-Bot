@@ -12,7 +12,7 @@ class image_manipulation(commands.Cog):
 	@commands.command()
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def wanted(self, ctx, user: discord.Member = None):
-		if user == None:
+		if not user:
 			user = ctx.author
 	
 		wanted = Image.open('./Images/wanted.jpg')
@@ -27,7 +27,7 @@ class image_manipulation(commands.Cog):
 	@commands.command()
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def hitler(self, ctx, user: discord.Member = None):
-		if user == None:
+		if not user:
 			user = ctx.author
 	
 		wanted = Image.open('./Images/hitler.jpg')

@@ -22,3 +22,11 @@ links.json
 test.py
 __pycache__/
 flaskSite.py
+.vscode/
+cogs/__pycache__/
+*.pyc
+cogs/__pycache__/admin.cpython-38.pyc
+cogs/__pycache__/custom.cpython-38.pyc
+cogs/__pycache__/errorhandler.cpython-38.pyc
+cogs/__pycache__/random.cpython-38.pyc
+cogs/__pycache__/rolebyxp.cpython-38.pyc

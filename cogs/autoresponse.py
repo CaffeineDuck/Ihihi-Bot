@@ -14,10 +14,8 @@ class autoresponse(commands.Cog):
 		Checks if the message author is bot or now
 		"""
 		#Checks If the messager isn't bot
-		if message.author.bot == True:
-			pass
-		else:
-		#Response to imagine
+		if not message.author.bot:
+			#Response to imagine
 			if "imagine" in message.content:
 				if "imagine" == message.content.split()[0]:
 					await message.channel.send("I can't even " + message.content +", bro!")
