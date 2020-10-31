@@ -26,7 +26,7 @@ def star():
 Checks if it is in a local machine
 """
 try:
-	print(os.environ['TEST'])
+	os.environ['TEST']
 	is_local = True
 	star()
 	print("The Bot Is Being Hosted Locally (On Samrid's PC)")
