@@ -139,16 +139,16 @@ class Help(commands.Cog):
             name=f"slap | `{prefix}slap <user>`",
             value="slaps the mentioned person", inline= False)
         embed.add_field(
-            name=f"kills | `{prefix}slap <user>`",
+            name=f"kills | `{prefix}kill <user>`",
             value="kills the mentioned person", inline= False)
         embed.add_field(
-            name=f"lick | `{prefix}slap <user>`",
+            name=f"lick | `{prefix}lick <user>`",
             value="licks the mentioned person", inline= False)
         embed.add_field(
-            name=f"hug | `{prefix}slap <user>`", 
+            name=f"hug | `{prefix}hug <user>`", 
             value="hugs the mentioned person", inline= False)
         embed.add_field(
-            name=f"pat | `{prefix}slap <user>`",
+            name=f"pat | `{prefix}pat <user>`",
             value="pats the mentioned person", inline= False)
         embed.set_footer(text=f'Requested by {ctx.author}')
         await ctx.send(embed=embed)
