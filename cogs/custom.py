@@ -7,6 +7,21 @@ member = []
 class custom(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
+		self.hugs = [
+		'https://i.pinimg.com/originals/f2/80/5f/f2805f274471676c96aff2bc9fbedd70.gif',
+		'https://media1.giphy.com/media/l2QDM9Jnim1YVILXa/source.gif',
+		'https://i.pinimg.com/originals/a1/64/6c/a1646c77119633b484ba98fc90613f15.gif',
+		'https://media1.tenor.com/images/977c0043ee29cdae790dc47507fcb91d/tenor.gif?itemid=12668474',
+		'https://acegif.com/wp-content/uploads/anime-hug.gif'
+		]
+ 
+		self.pats = [
+			'https://media1.tenor.com/images/d7c326bd43776f1e0df6f63956230eb4/tenor.gif?itemid=17187002',
+			'https://media1.tenor.com/images/fb3e0b0f18188450bfded4a585de2b90/tenor.gif?itemid=8208759',
+			'https://i.pinimg.com/originals/e3/e2/58/e3e2588fbae9422f2bd4813c324b1298.gif',
+			'https://i.gifer.com/KJ42.gif',
+			'https://thumbs.gfycat.com/BlushingDeepBlacknorwegianelkhound-small.gif'
+		]
 	
 	@commands.command()
 	@commands.cooldown(1, 5, commands.BucketType.user)
@@ -112,9 +127,32 @@ class custom(commands.Cog):
 			await ctx.send(f"{member.mention} is the chosen one!")
 		else:
 			await ctx.send(f"{member.mention} is chosen to {input}")
+		
+	@commands.command()
+	async def hug(self, ctx, member : discord.Member = None):
+		if not member:
+			embed = discord.Embed(description = f'{ctx.author.mention} got hugged!', color = discord.Color.green())
+		else:
+			embed = discord.Embed(description = f'{ctx.author.mention} hugged {member.mention}', color = discord.Color.green())
+		random_link = random.choice(self.hugs)   
+		embed.set_image(url = random_link)
+		await ctx.send(embed = embed)
 	
+	@commands.command()
+	async def pat(self, ctx, member : discord.Member = None):
+		if not member:
+			embed = discord.Embed(description = f'{ctx.author.mention} got patted!', color = discord.Color.green())
+		else:
+			embed = discord.Embed(description = f'{ctx.author.mention} pats {member.mention}', color = discord.Color.green())
+		random_link = random.choice(self.pats)   
+		embed.set_image(url = random_link)
+		await ctx.send(embed = embed)
 
-
+	@commands.command(aliases=['s'])
+	@commands.has_permissions(kick_members = True)
+	async def send(self, ctx, member : discord.Member, *, message = "No reason provided"):
+		await member.send(message)
+	
 	
 def setup(bot):
 	bot.add_cog(custom(bot))

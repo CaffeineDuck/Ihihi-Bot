@@ -20,7 +20,7 @@ async def reddit_grabber(self, subrd, ctx):
 
 	datas = random.choice(main)
 	link = datas[1]	
-	embed = discord.Embed(title = datas[0], colour = discord.Colour.green())
+	embed = discord.Embed(title = datas[0], timestamp = ctx.message.created_at, colour = discord.Colour.green())
 	embed.set_image(url = link)
 	embed.set_footer(text=f"Requested by {ctx.author}!")
 	if ".jpg" in str(link) or '.png' in str(link) or ".gif" in str(link[-4:-1]):

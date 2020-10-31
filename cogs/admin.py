@@ -81,7 +81,7 @@ class admin(commands.Cog):
 		"""
 		Main Embed
 		"""
-		embed = discord.Embed(description = user.mention, colour = discord.Color.blue())
+		embed = discord.Embed(description = user.mention, timestamp = ctx.message.created_at, colour = discord.Color.blue())
 		embed.set_author(name= user, url=user.avatar_url, icon_url=user.avatar_url)
 		embed.add_field(name= "**Joined**", value = joined_at  , inline = True)
 		embed.add_field(name= "**Registered**", value = created_at  , inline = True)
@@ -89,7 +89,7 @@ class admin(commands.Cog):
 		embed.add_field(name= "**Permissions**", value = permission  , inline = False)
 		embed.add_field(name= "**Acknowledgements**", value = acknowledgement  , inline = False)
 		embed.set_thumbnail(url=user.avatar_url)
-		embed.set_footer(text = f"ID: {user.id} • RIGHT NOW!")
+		embed.set_footer(text = f"ID: {user.id}")
 		await ctx.send(embed=embed)
 
 	@commands.command(aliases = ['av', 'pp'])
@@ -203,6 +203,37 @@ class admin(commands.Cog):
 			if (user.name, user.discriminator) == (member_name, member_discriminator):
 				await ctx.guild.unban(user)
 				await ctx.send(f'Unbanned {user.mention}')
+		
+	
+
+
+	@commands.command(aliases = ['si'])
+	async def serverinfo(self,ctx):
+		embed = discord.Embed(title = f"Info of {ctx.guild.name}" , timestamp = ctx.message.created_at , color = discord.Color.blue())
+		guild_members = (ctx.guild.members)
+
+		fields = [("ID:" , ctx.guild.id , True),
+				("Owner:" , ctx.guild.owner , True),
+				("Region:" , ctx.guild.region , True),
+				("Created at:" , ctx.guild.created_at.strftime("%d/%m/%Y %H:%M:%S") , True),
+				("Total Members:" , len(ctx.guild.members) , True),
+				("Humans:" , len([member for member in guild_members if not member.bot]) , True),
+				("Bots:" , len([member for member in guild_members if member.bot]) , True),
+				("Banned Members:" , len(await ctx.guild.bans()) , True),
+				("Text Channels:" , len(ctx.guild.text_channels) , True),
+				("Voice Channels:" , len(ctx.guild.voice_channels) , True),
+				("Categories" , len(ctx.guild.categories) , True),
+				("Roles" , len(ctx.guild.roles) , True)]
+		for name , value , inline in fields:
+			embed.add_field(name = name , value = value , inline = inline)
+
+		await ctx.send(embed=embed)
+	
+	@commands.command(aliases=['w'])
+	@commands.has_permissions(kick_members = True)
+	async def warn(self, ctx, member : discord.Member, *, reason = "No reason provided"):
+		await ctx.send(member.mention + " have been warned. Reason : "+ reason)
+		await member.send("You have been warned. Reason : "+ reason)
 
 
 			
