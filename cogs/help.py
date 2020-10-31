@@ -11,7 +11,7 @@ class Help(commands.Cog):
         Checks if it is in a local machine
         """
         try:
-            print(os.environ['TEST'])
+            self.lol = os.environ['TEST']
             self.is_local = True
         except Exception:
             self.is_local = False
@@ -231,6 +231,9 @@ class Help(commands.Cog):
         embed.add_field(
             name=f"reddit | `{prefix}r <subreddit-name>`", 
             value="Fetches image from any subreddit you want!", inline= False)
+        embed.add_field(
+            name=f"anyone | `{prefix}anyone` | `{prefix}anyone <text>`",
+            value="Chooses a radom person in the server.", inline= False)
         embed.set_footer(text=f'Requested by {ctx.author}')
         await ctx.send(embed=embed)
     
