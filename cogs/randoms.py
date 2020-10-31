@@ -1,12 +1,20 @@
 import discord
 from discord.ext import commands, tasks
-import praw 
 import random
 import requests
 import aiohttp
 import os
-from itertools import cycle
 import json
+import praw
+
+'''
+Credentials for reddit praw authentication!
+'''
+reddit = praw.Reddit(client_id = os.environ['ID'],
+				client_secret = os.environ['SECRET'],
+				username = os.environ['REDDIT_USERNAME'],
+				password = os.environ['PASSWORD'],
+				user_agent = "Ihihihi")
 
 """
 Reddit sender sends the embed by reading the links in the json!
@@ -21,7 +29,7 @@ async def reddit_sender(self, subrd, ctx):
 
 	datas = random.choice(main)
 	link = datas[1]	
-	embed = discord.Embed(title = datas[0], colour = discord.Colour.blue())
+	embed = discord.Embed(title = datas[0],timestamp = ctx.message.created_at, colour = discord.Colour.blue())
 	embed.set_image(url = link)
 	embed.set_footer(text=f"Requested by {ctx.author}!")
 	if ".jpg" in str(link) or '.png' in str(link) or ".gif" in str(link[-4:-1]):

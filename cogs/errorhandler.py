@@ -28,7 +28,9 @@ class error_handler(commands.Cog):
 		elif isinstance(error, commands.CommandOnCooldown):
 			await ctx.send(f"Wait for a while dumbass! {ctx.author.mention} {error}.")
 		elif "error code: 50013" in str(error):
-			await ctx.send(f"Please ensure that {self.bot.user.mention} has required permissions and has its role above the other roles to be added!")
+			await ctx.send(f"Please ensure that {self.bot.user.mention} has required permissions and has its role above others to be kicked/ banned/ muted!")
+		elif isinstance(error, commands.NotOwner):
+			await ctx.send(f"DUMBASS {ctx.author.mention}, you are not the owner, nor the creater of this bot so STFU! ")
 		elif isinstance(error, commands.CommandInvokeError):
 			await ctx.send(error)
 		else:

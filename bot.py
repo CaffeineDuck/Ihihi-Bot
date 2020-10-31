@@ -4,9 +4,9 @@ import os
 from itertools import cycle
 import json	
 import pymongo
-import motor
 from dotenv import load_dotenv
-# from flask_site import keep_alive
+import sys
+# from flaskSite import keep_alive
 
 
 """
@@ -26,7 +26,7 @@ def star():
 Checks if it is in a local machine
 """
 try:
-	print(os.environ['TEST'])
+	os.environ['TEST']
 	is_local = True
 	star()
 	print("The Bot Is Being Hosted Locally (On Samrid's PC)")
@@ -50,6 +50,10 @@ Mongo Db
 mongoclient = os.environ['MONGOCLIENT']
 bot = pymongo.MongoClient(mongoclient)
 db = bot.ihihihibot_db
+"""
+As I host my bot, i have a testing bot and a main bot so it 
+fetches the prefix from database according to where its hosted!
+"""
 if is_local:
 	prefixes = db.server_test_prefixes
 else:
@@ -71,6 +75,12 @@ defualt_prefix = "."
 intents = discord.Intents.default()
 intents.members = True
 client = commands.Bot(command_prefix = get_prefix, case_insensitive=True, intents=intents)
+
+
+"""
+Removes the Help Command
+"""
+client.remove_command('help')
 
 
 """
@@ -106,33 +116,6 @@ async def on_ready():
 			prefixes.insert_one(perfix_data)
 			print(f"Prefix for server id {guild.id} has been created!")			
 			star()
-"""
-Loads the cogs
-"""
-@client.command()
-async def load(ctx, extension):
-	client.load_extension(f'cogs.{extension}')
-	await ctx.send(f'The Plugin {extension} has been enabled!')
-
-
-"""
-unloads the cogs
-"""
-@client.command()
-async def unload(ctx, extension):
-	client.unload_extension(f'cogs.{extension}')
-	await ctx.send(f'The Plugin {extension} has been disabled!')
-
-
-"""
-Reloads the cogs
-"""
-@client.command()
-async def reload(ctx, extension):
-	client.unload_extension(f'cogs.{extension}')
-	client.load_extension(f'cogs.{extension}')
-	await ctx.send(f"The Plugin {extension} has been reloaded!")
-
 
 """
 It updates the database whenever it joins a new guild!
@@ -188,7 +171,7 @@ async def changeprefix(ctx,*, prefix):
 	prefixes.update_one(old_data, new_data)
 	print(f"Prefix for the server {ctx.guild.id} has been updated to '{prefix}' !")
 	star()
-	await ctx.send(f"The prefix was changed to {prefix}")
+	await ctx.send(f"The prefix was changed to `{prefix}`")
 
 
 """
@@ -200,9 +183,13 @@ async def prefix(ctx):
 	prefix = cur.get('prefix')
 	await ctx.send(f"My prefix for this server is {prefix}")
 
-for filename in os.listdir('./cogs'):
-	if filename.endswith('.py'):
-		client.load_extension(f"cogs.{filename[:-3]}")
+"""
+Loads all the cogs from /cogs directory
+"""
+if __name__ == "__main__":
+	for filename in os.listdir('./cogs'):
+		if filename.endswith('.py'):
+			client.load_extension(f"cogs.{filename[:-3]}")
 
 # keep_alive()
 client.run(token)
