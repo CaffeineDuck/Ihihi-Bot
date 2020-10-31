@@ -8,11 +8,18 @@ class custom(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 		self.hugs = [
-		'https://i.pinimg.com/originals/f2/80/5f/f2805f274471676c96aff2bc9fbedd70.gif',
-		'https://media1.giphy.com/media/l2QDM9Jnim1YVILXa/source.gif',
-		'https://i.pinimg.com/originals/a1/64/6c/a1646c77119633b484ba98fc90613f15.gif',
-		'https://media1.tenor.com/images/977c0043ee29cdae790dc47507fcb91d/tenor.gif?itemid=12668474',
-		'https://acegif.com/wp-content/uploads/anime-hug.gif'
+			'https://i.pinimg.com/originals/f2/80/5f/f2805f274471676c96aff2bc9fbedd70.gif',
+			'https://media1.giphy.com/media/l2QDM9Jnim1YVILXa/source.gif',
+			'https://i.pinimg.com/originals/a1/64/6c/a1646c77119633b484ba98fc90613f15.gif',
+			'https://media1.tenor.com/images/977c0043ee29cdae790dc47507fcb91d/tenor.gif?itemid=12668474',
+			'https://acegif.com/wp-content/uploads/anime-hug.gif',
+			'https://cdn.weeb.sh/images/r1G3xCFYZ.gif',
+			'https://cdn.weeb.sh/images/BJ0UovdUM.gif',
+			'https://cdn.weeb.sh/images/rkYetOXwW.gif',
+			'https://cdn.weeb.sh/images/rkYetOXwW.gif',
+			'https://cdn.weeb.sh/images/SknauOQwb.gif',
+			'https://cdn.weeb.sh/images/ryMqdOXvZ.gif',
+			'https://cdn.weeb.sh/images/S18oOuQw-.gif'
 		]
  
 		self.pats = [
@@ -21,8 +28,41 @@ class custom(commands.Cog):
 			'https://i.pinimg.com/originals/e3/e2/58/e3e2588fbae9422f2bd4813c324b1298.gif',
 			'https://i.gifer.com/KJ42.gif',
 			'https://thumbs.gfycat.com/BlushingDeepBlacknorwegianelkhound-small.gif'
+			'https://cdn.weeb.sh/images/B1D9J1tvZ.gif',
+			'https://cdn.weeb.sh/images/ryXj1JKDb.gif',
+			'https://cdn.weeb.sh/images/rktsca40-.gif'
 		]
-	
+
+		self.kills = [
+			'https://media.giphy.com/media/srELT0Or07YxG/giphy.gif',
+			'https://media.giphy.com/media/3o85xDBgbMyRZ6SyWs/giphy.gif',
+			'https://media.giphy.com/media/PkQFrCxsgL3Mc/giphy.gif',
+			'https://media.giphy.com/media/11HeubLHnQJSAU/giphy.gif'
+		]
+
+		self.slaps = [
+			'https://media.giphy.com/media/u8maN0dMhVWPS/giphy.gif',
+			'https://media.giphy.com/media/6Fad0loHc6Cbe/giphy.gif',
+			'https://media.giphy.com/media/Qv7WFppXtkqkM/giphy.gif',
+			'https://media.giphy.com/media/RXGNsyRb1hDJm/giphy.gif',
+			'https://media.giphy.com/media/RrLbvyvatbi36/giphy.gif',
+			'https://cdn.weeb.sh/images/BJLCX1Kw-.gif',
+			'https://cdn.weeb.sh/images/SJdXoVguf.gif',
+			'https://cdn.weeb.sh/images/Hkw1VkYP-.gif',
+			'https://cdn.weeb.sh/images/By2iXyFw-.gif'
+		]
+
+		self.licks = [
+			'https://media.giphy.com/media/26gspipWnu59srmM0/giphy.gif',
+			'https://cdn.weeb.sh/images/H1EJxR_vZ.gif',
+			'https://cdn.weeb.sh/images/ryGpGsnAZ.gif',
+			'https://cdn.weeb.sh/images/H13HS7S6-.gif',
+			'https://cdn.weeb.sh/images/Bkxge0uPW.gif',
+			'https://cdn.weeb.sh/images/rkBbBQS6W.gif',
+			'https://cdn.weeb.sh/images/Hkknfs2Ab.gif'
+
+		]
+
 	@commands.command()
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def gn(self, ctx, user: discord.Member = None):
@@ -126,7 +166,7 @@ class custom(commands.Cog):
 		if input == None:
 			await ctx.send(f"{member.mention} is the chosen one!")
 		else:
-			await ctx.send(f"{member.mention} is chosen to {input}")
+			await ctx.send(f"{member.mention} is chosen to {input}!")
 		
 	@commands.command()
 	async def hug(self, ctx, member : discord.Member = None):
@@ -145,6 +185,36 @@ class custom(commands.Cog):
 		else:
 			embed = discord.Embed(description = f'{ctx.author.mention} pats {member.mention}', color = discord.Color.green())
 		random_link = random.choice(self.pats)   
+		embed.set_image(url = random_link)
+		await ctx.send(embed = embed)
+	
+	@commands.command()
+	async def kill(self, ctx, member : discord.Member = None):
+		if not member:
+			embed = discord.Embed(description = f'{ctx.author.mention} is a murdurer!', color = discord.Color.red())
+		else:
+			embed = discord.Embed(description = f'{ctx.author.mention} KILLED {member.mention}', color = discord.Color.red())
+		random_link = random.choice(self.kills)   
+		embed.set_image(url = random_link)
+		await ctx.send(embed = embed)
+	
+	@commands.command()
+	async def slap(self, ctx, member : discord.Member = None):
+		if not member:
+			embed = discord.Embed(description = f'{ctx.author.mention} slapped!', color = discord.Color.red())
+		else:
+			embed = discord.Embed(description = f'{ctx.author.mention} slapped {member.mention}', color = discord.Color.red())
+		random_link = random.choice(self.slaps)   
+		embed.set_image(url = random_link)
+		await ctx.send(embed = embed)
+
+	@commands.command()
+	async def lick(self, ctx, member : discord.Member = None):
+		if not member:
+			embed = discord.Embed(description = f'{ctx.author.mention} got licked.', color = discord.Color.red())
+		else:
+			embed = discord.Embed(description = f'{ctx.author.mention} licked {member.mention}', color = discord.Color.red())
+		random_link = random.choice(self.licks)   
 		embed.set_image(url = random_link)
 		await ctx.send(embed = embed)
 
