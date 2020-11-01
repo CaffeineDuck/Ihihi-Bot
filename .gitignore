@@ -8,4 +8,3 @@ flaskSite.py
 .vscode/
 cogs/__pycache__/
 *.pyc
-*.jpeg
