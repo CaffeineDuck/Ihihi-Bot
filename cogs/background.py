@@ -65,7 +65,7 @@ class Background(commands.Cog):
 					'Title': submission.title,
 					'Link': submission.url
 				})
-		with open('links.json', 'w') as file:
+		with open('./Other/json/links.json', 'w') as file:
 			json.dump(data, file)
 		star()
 		print("Reddit grabber has compeleted its task!")

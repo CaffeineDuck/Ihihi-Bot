@@ -125,7 +125,7 @@ class Help(commands.Cog):
             ##############################
            
 
-            embed.set_footer(text = f'Requested by {ctx.author}', icon_url=self.bot.user.avatar_url)
+            embed.set_footer(text = f'Requested by {ctx.author}', icon_url=ctx.author.avatar_url)
             await ctx.send(embed=embed)
 
     @help.command(aliases=['others', 'other', 'other commands', 'Others'])
@@ -179,20 +179,18 @@ class Help(commands.Cog):
             name=f"warn | `{prefix}warn <user> <reason>`",
             value="Warns the mentioned user.", inline= False)
         embed.add_field(
-            name=f"mute | `{prefix}mute <user> <time-in-minutes>`",
+            name=f"mute | `{prefix}mute <user> <time-in-minutes>(optional)`",
             value="Mutes the user | If used `mute <time>` mutes the user for specified time.")
         embed.add_field(
-            name=f"purge | `{prefix}purge <no-of-messages>`", 
+            name=f"purge | `{prefix}purge <user>(optional) <no-of-messages>`", 
             value="Deletes given number of messages if you have the desired permissions", inline= False)
-        embed.add_field(
-            name=f"purgeuser | `{prefix}purgeu <user> <no-of-messages>`", 
-            value="Deletes given number of messages from a specified user.", inline= False)
-        embed.add_field(
-            name=f"setwelcome | `{prefix}setwelcome <#channel>`", 
-            value="Sets the channel as the welcomer channel.", inline= False)
-        embed.add_field(
-            name=f"removewelcome | `{prefix}rwelcome <#channel>`", 
-            value="Removes the channel as the welcomer channel.", inline= False)
+
+        # embed.add_field(
+        #     name=f"setwelcome | `{prefix}setwelcome <#channel>`", 
+        #     value="Sets the channel as the welcomer channel.", inline= False)
+        # embed.add_field(
+        #     name=f"removewelcome | `{prefix}rwelcome <#channel>`", 
+        #     value="Removes the channel as the welcomer channel.", inline= False)
         embed.add_field(
             name=f"nuke | `{prefix}nuke <#channel>`", 
             value="NUKES THE CHANNEL!", inline= False)    

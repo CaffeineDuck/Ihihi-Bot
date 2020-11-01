@@ -21,7 +21,7 @@ class image_manipulation(commands.Cog):
 		pfp = Image.open(data)
 		pfp = pfp.resize((395, 395))
 		wanted.paste(pfp, (269,451))
-		wanted.save("./Images/wanted.png")
+		wanted.save("./Other/Images/Manipulation/wanted.png")
 		await ctx.send(file = discord.File("./Other/Images/Manipulation/wanted.png"))
 	
 	@commands.command()
@@ -36,7 +36,7 @@ class image_manipulation(commands.Cog):
 		pfp = Image.open(data)
 		pfp = pfp.resize((194, 194))
 		wanted.paste(pfp, (56,56))
-		wanted.save("./Images/hitler.png")
+		wanted.save("./Other/Images/Manipulation/hitler.png")
 		await ctx.send(file = discord.File("./Other/Images/Manipulation/hitler.png"))
 
 def setup(bot):
