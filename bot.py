@@ -1,3 +1,29 @@
+"""
+Discord bot made by Samrid Pandit | ihihihihihi#3888
+Created at 11/1/2020
+Available under the Apache License 2.0
+"
+A permissive license whose main conditions require preservation of copyright and license notices.
+Contributors provide an express grant of patent rights.
+Licensed works, modifications, and larger works may be distributed under different terms and without source code.
+"
+Any of my works are free for use. As mentioned above. Any small snippets or a few lines. Nothing too large. I dont mind if its not mentioned.
+How ever using larger works. Such as a good chunk (10 - 20+) lines. A mention that the code has been originally made by me and edited by you is required.
+When using this code you must remember what you can and cannot do.
+
+Permissions:
+    Commercial use
+    Modification
+    Distribution
+    Patent use
+    Private use
+Limitations:
+    Trademark use
+    Liability
+    Warranty
+"""
+
+
 from discord.ext import commands, tasks
 import discord
 import os

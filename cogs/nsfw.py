@@ -1,8 +1,6 @@
 import discord
 from discord.ext import commands
-import praw 
 import random
-import os
 import json
 
 """
@@ -31,8 +29,6 @@ async def reddit_grabber(self, subrd, ctx):
 		await reddit_grabber(self, subrd, ctx)
 	return
 		
-		
-
 
 class NSFWcommands(commands.Cog):
 	def __init__(self, bot):

@@ -99,6 +99,15 @@ class Random(commands.Cog):
 		embed.set_image(url=image)
 		embed.set_footer(text="https://randomfox.ca")
 		await ctx.send(embed=embed)
+	
+	@commands.command(aliases=['doesnotexist', 'fakeperson'])
+	async def thispersondoesnotexist(self, ctx):
+		_image = f'{random.randrange(0,100)}.jpeg'
+		file = discord.File(f"./Other/Images/Random-Person/{_image}", filename=_image)
+		embed = discord.Embed(title="Real Person?", description = "This person doesn't exist!", color=0xFFFFF0)
+		embed.set_image(url=f"attachment://{_image}")
+		embed.set_footer(text=f'Requested by {ctx.author}')
+		await ctx.send(file=file, embed=embed)
 
 def setup(bot):
 	bot.add_cog(Random(bot))

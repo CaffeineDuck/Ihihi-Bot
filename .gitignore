@@ -1,23 +1,6 @@
 /.env
-/.bot copy.py
 /lol.py
-/.bot_bakcup.py
-.cogs_copy/
-/.gitignore
-/.links.txt
-cogs/__pycache__/background.cpython-38.pyc
-cogs/__pycache__/custom.cpython-38.pyc
-cogs/__pycache__/errorhandler.cpython-38.pyc
-cogs/__pycache__/music.cpython-38.pyc
-cogs/__pycache__/nsfw.cpython-38.pyc
-cogs/__pycache__/random.cpython-38.pyc
-links/.gitignore
-cogs/__pycache__/custom.cpython-38.pyc
-cogs/__pycache__/errorhandler.cpython-38.pyc
-cogs/__pycache__/nsfw.cpython-38.pyc
-cogs/__pycache__/random.cpython-38.pyc
 .gitignore
-prefixes_test.json
 links.json
 test.py
 __pycache__/
@@ -25,8 +8,4 @@ flaskSite.py
 .vscode/
 cogs/__pycache__/
 *.pyc
-cogs/__pycache__/admin.cpython-38.pyc
-cogs/__pycache__/custom.cpython-38.pyc
-cogs/__pycache__/errorhandler.cpython-38.pyc
-cogs/__pycache__/random.cpython-38.pyc
-cogs/__pycache__/rolebyxp.cpython-38.pyc
+*.jpeg
