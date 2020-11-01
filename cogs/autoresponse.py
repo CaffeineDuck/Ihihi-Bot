@@ -15,26 +15,28 @@ class autoresponse(commands.Cog):
 		"""
 		#Checks If the messager isn't bot
 		if not message.author.bot:
-			#Response to imagine
-			if "imagine" in message.content:
-				if "imagine" == message.content.split()[0]:
+			try:
+				#Response to imagine
+				if "imagine" in message.content.split()[0]:
 					await message.channel.send("I can't even " + message.content +", bro!")
 
-			#Response to f
-			elif "f" == message.content.lower():
-				await message.channel.send("f")
-			
-			#Response to no u
-			elif "no u" == message.content.lower():
-				await message.channel.send("no u")
-			
-			#Response to .hello there
-			elif ".hello there" == message.content.lower() or "hello there" == message.content.lower():
-				await message.channel.send("General Kenobi")
-			
-			#Response to shh
-			elif "shh" == message.content.lower().split()[0] or ".shh" == message.content.lower().split()[0]:
-				await message.channel.send(":shushing_face:")
+				#Response to f
+				elif "f" == message.content.lower():
+					await message.channel.send("f")
+				
+				#Response to no u
+				elif "no u" == message.content.lower():
+					await message.channel.send("no u")
+				
+				#Response to .hello there
+				elif ".hello there" == message.content.lower() or "hello there" == message.content.lower():
+					await message.channel.send("General Kenobi")
+				
+				#Response to shh
+				elif "shh" == message.content.lower().split()[0] or ".shh" == message.content.lower().split()[0]:
+					await message.channel.send(":shushing_face:")
+			except IndexError:
+				pass
 
 def setup(bot):
 	bot.add_cog(autoresponse(bot))
