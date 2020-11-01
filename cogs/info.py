@@ -118,6 +118,11 @@ class info(commands.Cog):
 
 		await ctx.send(embed=embed)
 
+	"""
+	The following command is written by:
+	Author: _-*™#7139
+	Edited by: Samrid Pandit
+	"""
 
 	@commands.command(aliases=['si'])
 	@commands.cooldown(1, 5, BucketType.guild)

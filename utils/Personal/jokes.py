@@ -1,3 +1,7 @@
+"""
+Author: _-*™#7139
+"""
+
 jokes_list = ['I told my wife she was drawing her eyebrows to high.\n\nShe looked suprised.',
         'And the Lord said unto John,"Come forth and you will receive eternal life\nBut John came fifth,and won a toaster."',
         'I threw a boomerang a few years ago.\nI now live in constant fear',

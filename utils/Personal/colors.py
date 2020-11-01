@@ -1,7 +1,7 @@
 """
 Original Author  Ernesto P. Adorio, Ph.D
 Original Source: http://my-other-life-as-programmer.blogspot.com/2012/02/python-finding-nearest-matching-color.html
-Modifed By: Samrid Pandit / ihihihihihi#3888
+Modifed By: _-*™#7139 | Samrid Pandit / ihihihihihi#3888
 This class maps an RGB value to the nearest color name it can find. Code is modified to include
 ImageMagick names and WebColor names.
 1. Modify the minimization criterion to use least sum of squares of the differences.

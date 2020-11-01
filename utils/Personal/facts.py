@@ -1,3 +1,7 @@
+"""
+Author: _-*™#7139
+"""
+
 facts_list = [
     'McDonald’s once made bubblegum-flavored broccoli',
     'Some fungi create zombies, then control their minds',
