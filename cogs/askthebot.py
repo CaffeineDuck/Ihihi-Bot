@@ -1,5 +1,6 @@
 from discord.ext import commands
 import discord
+import random
 
 class askthebot(commands.Cog):
 	def __init__(self, bot):
