@@ -20,7 +20,7 @@ reddit = praw.Reddit(client_id = os.environ['ID'],
 Reddit sender sends the embed by reading the links in the json!
 """
 async def reddit_sender(self, subrd, ctx):
-	with open('links.json') as json_file:
+	with open('./Other/json/links.json') as json_file:
 		main = []
 		data = json.load(json_file)
 		sub = data[subrd]

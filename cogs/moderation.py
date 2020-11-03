@@ -4,6 +4,7 @@ from discord.ext.commands import has_permissions, BucketType, cooldown
 from datetime import datetime, timedelta
 import asyncio
 import json
+import pymongo
 
 class Moderation(commands.Cog):
 	def __init__(self, bot):
@@ -134,30 +135,25 @@ class Moderation(commands.Cog):
 
 
 	@commands.command(name='purge')
-	async def purge(self, ctx, num_messages: int = 10):
+	async def purge(self, ctx, num_messages: int = 10, user:discord.Member = None):
 		"""
 		Clear <n> messages from current channel
 		"""
+		if user:
+			channel = ctx.message.channel
+			def check(msg):
+				return msg.author.id == user.id
+			await ctx.message.delete()
+			await channel.purge(limit=num_messages, check=check, before=None)
+			await ctx.send(f"`{num_messages} messages from {user} deleted!`", delete_after=5)
+			return
 		channel = ctx.message.channel
 		await ctx.message.delete()
 		await channel.purge(limit=num_messages, check=None, before=None)
 		await ctx.send(f"`{num_messages} messages has been deleted!`", delete_after=5)
 
-
-	@commands.command(name='purge_user', hidden=True, aliases=['purgeu', 'purgeuser'],)
-	async def purge_user(self, ctx, user: discord.Member, num_messages: int = 10):
-		"""
-		Clear all messagges of <User> within the last [n=10] messages
-		"""
-		channel = ctx.message.channel
-
-		def check(msg):
-			return msg.author.id == user.id
-
-		await ctx.message.delete()
-		await channel.purge(limit=num_messages, check=check, before=None)
-		await ctx.send(f"`{num_messages} messages from {user} deleted!`", delete_after=5)
-	
+			
+		
 	@commands.command()
 	@cooldown(1, 300, BucketType.user)
 	@commands.is_owner()
@@ -177,10 +173,7 @@ class Moderation(commands.Cog):
 
 			msg = await self.bot.wait_for('message', check=check)
 			await ctx.channel.send('Theres no going back!\n**Are you sure.** \n Type in `yes` to proceed!')
-			def check(m):
-				user = ctx.author
-				return m.author.id == user.id and m.content == 'yes'
-
+	
 			msg = await self.bot.wait_for('message', check=check)
 			new = await channels.clone()
 			await channels.delete()
@@ -243,19 +236,19 @@ class Moderation(commands.Cog):
 		if channel == None:
 			await ctx.send('You havent provided a valid channel!')
 		else:
-			with open('JSON/welcome.json', 'r') as f:
+			with open('./Other/json/welcome.json', 'r') as f:
 				welcome_id = json.load(f)
 			welcome_id[str(ctx.guild.id)] = f'{channel.id}'
-			with open('JSON/welcome.json', 'w') as f:
+			with open('./Other/json/welcome.json', 'w') as f:
 				json.dump(welcome_id, f, indent=4)
 			await ctx.send(f'The welcomes channel has been set as `{channel.name}`.')
 
 	@commands.command(aliases=['rw', 'remove_w', 'r_welcome', 'removewelcome', 'rwelcome'])
 	async def remove_welcome(self, ctx):
-		with open('JSON/welcome.json', 'r') as f:
+		with open('./Other/json/welcome.json', 'r') as f:
 			welcome_id = json.load(f)
 		welcome_id[str(ctx.guild.id)] = f'Not Set'
-		with open('JSON/welcome.json', 'w') as f:
+		with open('./Other/json/welcome.json', 'w') as f:
 			json.dump(welcome_id, f, indent=4)
 		await ctx.send(f'You have removed the welcome messages!')
 

@@ -7,6 +7,7 @@ import asyncio
 import time
 import math
 import random
+import json
 
 def convert_size(bytes):
    if bytes == 0:
@@ -21,13 +22,13 @@ def convert_size(bytes):
 class info(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
+		deleted_message = {}
 
 	@commands.command(aliases=['user', 'info'])
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def whois(self, ctx, user: discord.Member = None):
 		if user == None:
 			user = ctx.author
-
 
 		"""
 		Variables for the EMBED DOWN
@@ -284,6 +285,34 @@ class info(commands.Cog):
 				await ctx.send('You never reacted in time!')
 		except Exception as e:
 			await ctx.send(e)
+		
+	@commands.Cog.listener()
+	async def on_message_delete(self, message):
+		self.deleted_message[message.guild.id] = {
+			'author': str(message.author),
+			'channel': str(message.channel),
+			'message': str(message.content),
+		}
+
+		with open('./Other/json/sniper.json', 'w') as file:
+			json.dump(self.deleted_message, file)
+
+
+	@commands.command()
+	async def snipe(self, ctx):
+		with open('./Other/json/sniper.json') as json_file:
+			data = json.load(json_file)
+			details = data[str(ctx.guild.id)]
+			author = details['author']
+			channel = details['channel']
+			message = details['message']
+		try:
+			embed=discord.Embed(title=f"A message in {channel} from {author} was deleted!", timestamp = ctx.message.created_at, description=f"`{message}`", color = discord.Color(0x00ff6a))
+			embed.set_footer(text=f"{ctx.author.name}", icon_url=ctx.author.avatar_url)
+			embed.set_author(name=f"{self.bot.user.name}", icon_url=self.bot.user.avatar_url)
+			await ctx.send(embed=embed)
+		except Exception:	
+			await ctx.send("There is nothing to snipe.")
 
 
 def setup(bot):

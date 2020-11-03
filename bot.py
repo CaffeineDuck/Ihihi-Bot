@@ -143,6 +143,24 @@ async def on_ready():
 			print(f"Prefix for server id {guild.id} has been created!")			
 			star()
 
+		"""
+		###########################################
+		###       If I ever need to             ###
+		###       update data in the            ###
+		###             db                      ###
+		###########################################
+		
+		old_data  = prefixes.find_one({'server_id' : guild.id})
+
+		new_data = { "$set": {
+						'welcome_channel': None
+				}
+		}
+		
+		prefixes.update_one(old_data, new_data)
+		print(f"Welcome channel for server {guild.id} has been created!")	
+		"""
+
 """
 It updates the database whenever it joins a new guild!
 """
