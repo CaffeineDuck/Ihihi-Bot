@@ -137,7 +137,8 @@ async def on_ready():
 			perfix_data = {
 				'server_id' : guild.id,
 				'prefix' : defualt_prefix,
-				'server_name' : guild.name
+				'server_name' : guild.name,
+				'welcome_channel': None
 			}
 			prefixes.insert_one(perfix_data)
 			print(f"Prefix for server id {guild.id} has been created!")			
@@ -161,20 +162,7 @@ async def on_ready():
 		print(f"Welcome channel for server {guild.id} has been created!")	
 		"""
 
-"""
-It updates the database whenever it joins a new guild!
-"""
-@client.event
-async def on_guild_join(guild):
-	if prefixes.count_documents({'server_id' : guild.id}) == 0:
-			perfix_data = {
-				'server_id' : guild.id,
-				'prefix' : defualt_prefix,
-				'server_name' : guild.name
-			}
-			prefixes.insert_one(perfix_data)
-			print(f"Prefix for server id {guild.id} has been created!")
-			star()
+
 
 
 """

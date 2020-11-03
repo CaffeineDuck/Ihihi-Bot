@@ -47,6 +47,18 @@ class OwnerCog(commands.Cog):
             await ctx.send(f'**`ERROR:`** {type(e).__name__} - {e}')
         else:
             await ctx.send(f"**`SUCCESS`**, The cog `{cog.replace('cogs.','')}` has been reloaded!")
+    
+    @commands.command()
+    @commands.is_owner()
+    async def sync(self, ctx):
+        msg = await ctx.send(f'Syncing {self.bot.user.name} now!')
+        for file in os.listdir('./cogs'):
+            if file.endswith('.py'):
+                try:
+                    self.bot.reload_extension(f"cogs.{file[:-3]}")
+                except Exception:
+                    pass
+        await msg.edit(content=f'{self.bot.user.name} has been synced!')
 
 
 def setup(bot):

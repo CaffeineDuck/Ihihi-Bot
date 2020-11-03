@@ -9,6 +9,13 @@ import math
 import random
 import json
 
+
+"""
+Prints "-------------------------"
+"""
+def star():
+	print("-----------------------------------------------")
+
 def convert_size(bytes):
    if bytes == 0:
        return "0B"
@@ -22,7 +29,8 @@ def convert_size(bytes):
 class info(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
-		deleted_message = {}
+		self.deleted_message = {}
+		
 
 	@commands.command(aliases=['user', 'info'])
 	@commands.cooldown(1, 5, commands.BucketType.user)
@@ -115,7 +123,7 @@ class info(commands.Cog):
 		embed = discord.Embed(title = 'Avatar', colour = discord.Color.blue())
 		embed.set_author(name= user, url=user.avatar_url, icon_url=user.avatar_url)
 		embed.set_image(url=user.avatar_url)
-		embed.set_footer(text = f"Requested by {user}")
+		embed.set_footer(text = f"Requested by {ctx.author}")
 
 		await ctx.send(embed=embed)
 
@@ -292,6 +300,8 @@ class info(commands.Cog):
 			'author': str(message.author),
 			'channel': str(message.channel),
 			'message': str(message.content),
+			'welcome_channel': None,
+
 		}
 
 		with open('./Other/json/sniper.json', 'w') as file:
@@ -300,17 +310,19 @@ class info(commands.Cog):
 
 	@commands.command()
 	async def snipe(self, ctx):
-		with open('./Other/json/sniper.json') as json_file:
-			data = json.load(json_file)
-			details = data[str(ctx.guild.id)]
-			author = details['author']
-			channel = details['channel']
-			message = details['message']
 		try:
-			embed=discord.Embed(title=f"A message in {channel} from {author} was deleted!", timestamp = ctx.message.created_at, description=f"`{message}`", color = discord.Color(0x00ff6a))
-			embed.set_footer(text=f"{ctx.author.name}", icon_url=ctx.author.avatar_url)
-			embed.set_author(name=f"{self.bot.user.name}", icon_url=self.bot.user.avatar_url)
-			await ctx.send(embed=embed)
+			with open('./Other/json/sniper.json') as json_file:
+				data = json.load(json_file)
+				details = data[str(ctx.guild.id)]
+				author = details['author']
+				channel = details['channel']
+				message = details['message']
+			
+			if channel == ctx.channel:
+				embed=discord.Embed(title=f"A message in {channel} from {author} was deleted!", timestamp = ctx.message.created_at, description=f"`{message}`", color = discord.Color(0x00ff6a))
+				embed.set_footer(text=f"{ctx.author.name}", icon_url=ctx.author.avatar_url)
+				embed.set_author(name=f"{self.bot.user.name}", icon_url=self.bot.user.avatar_url)
+				await ctx.send(embed=embed)
 		except Exception:	
 			await ctx.send("There is nothing to snipe.")
 

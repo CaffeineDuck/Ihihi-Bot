@@ -213,7 +213,7 @@ class Help(commands.Cog):
             name=f"slap | `{prefix}slap <user>`",
             value="slaps the mentioned person", inline= False)
         embed.add_field(
-            name=f"kills | `{prefix}kill <user>`",
+            name=f"kill | `{prefix}kill <user>`",
             value="kills the mentioned person", inline= False)
         embed.add_field(
             name=f"lick | `{prefix}lick <user>`",
