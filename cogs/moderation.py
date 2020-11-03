@@ -5,12 +5,37 @@ from datetime import datetime, timedelta
 import asyncio
 import json
 import pymongo
+import os
+
+"""
+Checks if it is in a local machine
+"""
+try:
+	os.environ['TEST']
+	is_local = True
+except Exception:
+	is_local = False
 
 class Moderation(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
+		"""
+		Mongo Db
+		"""
+		self.mongoclient = os.environ['MONGOCLIENT']
+		self.bot_mongo = pymongo.MongoClient(self.mongoclient)
+		self.db = self.bot_mongo.ihihihibot_db
+		"""
+		As I host my bot, i have a testing bot and a main bot so it 
+		fetches the prefix from database according to where its hosted!
+		"""
+		if is_local:
+			self.prefixes = self.db.server_test_prefixes
+		else:
+			self.prefixes = self.db.server_prefixes
 	
 	@commands.command(aliases=['m'])
+	@cooldown(1, 10, BucketType.user)
 	@commands.has_permissions(manage_roles = True)
 	async def mute(self, ctx, user:discord.Member = None, time:int = None):
 		if not user:
@@ -72,6 +97,7 @@ class Moderation(commands.Cog):
 
 
 	@commands.command(aliases=['k'])
+	@cooldown(1, 60, BucketType.user)
 	@has_permissions(kick_members = True)
 	async def kick(self, ctx, user:discord.Member = None,*, reason = "No Reason Specified"):
 		if not user:
@@ -88,6 +114,7 @@ class Moderation(commands.Cog):
 				await ctx.send(f"{user.mention}'s DM is closed!", delete_after = 5)
 
 	@commands.command(aliases=['b'])
+	@cooldown(1, 100, BucketType.user)
 	@commands.has_permissions(ban_members=True)
 	async def ban(self, ctx, user: discord.Member, *, reason=None):
 		await user.ban(reason=reason)
@@ -95,10 +122,8 @@ class Moderation(commands.Cog):
 		embed.set_author(name= user, url=user.avatar_url, icon_url=user.avatar_url)
 		embed.set_footer(text=f'Requested by {ctx.author}')
 		await ctx.send(embed=embed)
-		try:
-			await user.send(f"You have been banned. Reason {reason}")
-		except Exception:
-			await ctx.send(f"{user.mention}'s DM is closed!", delete_after = 5)
+		await user.send(f"You have been banned. Reason {reason}")
+	
 
 
 	# The below code unbans player.
@@ -119,6 +144,7 @@ class Moderation(commands.Cog):
 				await ctx.send(f'Unbanned {user.mention}')
 	
 	@commands.command(aliases=['w'])
+	@cooldown(1, 10, BucketType.user)
 	@commands.has_permissions(kick_members = True)
 	async def warn(self, ctx, user: discord.Member = None, *, reason = "No reason provided"):
 		if not user:
@@ -128,10 +154,8 @@ class Moderation(commands.Cog):
 			embed.set_author(name= f"{user} has been warned", url=user.avatar_url, icon_url=user.avatar_url)
 			embed.set_footer(text=f'Requested by {ctx.author}')
 			await ctx.send(embed=embed)
-			try:
-				await user.send(f"You have been warned. Reason {reason}")
-			except Exception:
-				await ctx.send(f"{user.mention}'s DM is closed!", delete_after = 5)
+			await user.send(f"You have been warned. Reason {reason}")
+		
 
 
 	@commands.command(name='purge')
@@ -193,9 +217,10 @@ class Moderation(commands.Cog):
 			await member.edit(nick=f'{x}')
 			await ctx.send(f'{member.name} has been changed to {x}')
 
+
 	@commands.command()
 	@commands.has_guild_permissions(manage_channels=True)
-	@commands.cooldown(1, 60, BucketType.user)
+	@commands.cooldown(20, 60, BucketType.user)
 	async def slowmode(self, ctx, time : int=0):
 		if time < 0:
 			await ctx.send('Give a positive number.')
@@ -208,6 +233,7 @@ class Moderation(commands.Cog):
 				await ctx.send(f'The channel {ctx.channel.name} now has a slowmode of {time} seconds')
 		except Exception:
 			await ctx.send('Not a number!')
+
 
 	@commands.command()
 	@commands.has_permissions(manage_channels=True)
@@ -231,25 +257,78 @@ class Moderation(commands.Cog):
 			await channel.set_permissions(ctx.guild.default_role, overwrite=overwrites)
 			await ctx.send('**The channel `{}` has now been unlocked!**'.format(ctx.channel.name))
 	
-	@commands.command(aliases=['sw', 'setwelcome', 'set_w'])
+	@commands.command()
+	async def unlock(self, ctx):
+		channel = ctx.channel
+		overwrites = channel.overwrites[ctx.guild.default_role]
+		overwrites.send_messages = True
+		await channel.set_permissions(ctx.guild.default_role, overwrite=overwrites)
+		await ctx.send('**The channel `{}` has now been unlocked!**'.format(ctx.channel.name))
+	
+
+	@commands.command(aliases=['sw', 'setwelcome', 'set_w', 'welcome'])
+	@cooldown(1, 10, BucketType.user)
 	async def set_welcome(self, ctx, channel : discord.TextChannel=None):
-		if channel == None:
-			await ctx.send('You havent provided a valid channel!')
-		else:
-			with open('./Other/json/welcome.json', 'r') as f:
-				welcome_id = json.load(f)
-			welcome_id[str(ctx.guild.id)] = f'{channel.id}'
-			with open('./Other/json/welcome.json', 'w') as f:
-				json.dump(welcome_id, f, indent=4)
+		cur = self.prefixes.find_one({'server_id':ctx.guild.id})
+		prefix = cur.get('prefix')
+	
+		def check(m):
+			return m.author == ctx.author and m.channel == ctx.channel
+
+		if not channel:
+			await ctx.send(f'Please provide a channel \n `{prefix}welcome <#channel>`')
+			return
+		
+		await ctx.send("Please write `yes` if you would like a custom welcome text. \n If you are okay with the defualt welcome message, please type `no`")
+		await ctx.send("PLEASE REPLY WITH A VALID CUSTOM MESSAGE WITHIN 20 SECONDS OR TYPE **ABORT** TO CANCEL!")
+		custom_bool = await self.bot.wait_for('message', check=check, timeout = 20)
+		if custom_bool.content.lower() in ['no','n']:
+
+			old_data  = self.prefixes.find_one({'server_id' : ctx.guild.id})
+			new_data = { "$set": {
+							'welcome_channel': channel.id,
+							'custom_message': None
+					}
+			}
+			self.prefixes.update_one(old_data, new_data)
+			print(f"Welcome channel for server {ctx.guild.id} has been added!")
+			await ctx.send(f'The welcomes channel has been set as `{channel.name}`.')	
+
+		elif custom_bool.content.lower() in ['yes','y']:
+			await ctx.send("Please type the custom message!")
+			await ctx.send("PLEASE REPLY WITH A VALID CUSTOM MESSAGE WITHIN 100 SECONDS OR TYPE **ABORT** TO CANCEL!")
+			
+			custom_message = await self.bot.wait_for('message', check=check, timeout=100)
+			if custom_message.content.lower() == "abort":
+				return
+			else:
+				old_data  = self.prefixes.find_one({'server_id' : ctx.guild.id})
+				new_data = { "$set": {
+								'welcome_channel': channel.id,
+								'custom_message': f'{str(custom_message.content)}'
+						}
+			}
+			self.prefixes.update_one(old_data, new_data)
+			print(f"Welcome channel for server {ctx.guild.id} has been added!")
 			await ctx.send(f'The welcomes channel has been set as `{channel.name}`.')
+	
+
+
+		
+
 
 	@commands.command(aliases=['rw', 'remove_w', 'r_welcome', 'removewelcome', 'rwelcome'])
+	@cooldown(1, 60, BucketType.user)
 	async def remove_welcome(self, ctx):
-		with open('./Other/json/welcome.json', 'r') as f:
-			welcome_id = json.load(f)
-		welcome_id[str(ctx.guild.id)] = f'Not Set'
-		with open('./Other/json/welcome.json', 'w') as f:
-			json.dump(welcome_id, f, indent=4)
+
+		old_data  = self.prefixes.find_one({'server_id' : ctx.guild.id})
+		new_data = { "$set": {
+						'welcome_channel': None
+				}
+		}
+		self.prefixes.update_one(old_data, new_data)
+		print(f"Welcome channel for server {ctx.guild.id} has been removed!")	
+
 		await ctx.send(f'You have removed the welcome messages!')
 
 def setup(bot):
