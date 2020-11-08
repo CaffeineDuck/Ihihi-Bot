@@ -31,7 +31,9 @@ class error_handler(commands.Cog):
 
 	@commands.Cog.listener()
 	async def on_command_error(self, ctx, error):
-		if isinstance(error, commands.CommandNotFound):
+		if isinstance(error, commands.NSFWChannelRequired):
+			pass
+		elif isinstance(error, commands.CommandNotFound):
 			pass
 		elif isinstance(error, commands.CommandOnCooldown):
 			global time
