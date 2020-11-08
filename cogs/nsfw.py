@@ -1,101 +1,106 @@
-import discord
-from discord.ext import commands
+import pickle
 import random
-import json
+import traceback
 
-"""
-Reddit sender sends the embed by reading the links in the .txt!
-"""
-linked = []
+import aiofiles
+import asyncpraw
+import discord
+from discord.ext import commands, tasks
 
-async def reddit_grabber(self, subrd, ctx):
-	with open('./Other/json/links.json') as json_file:
-		main = []
-		data = json.load(json_file)
-		sub = data[subrd]
-		for data_list in sub:
-			main.append([data_list['Title'], data_list['Link']])
+from utils.Personal.cached_reddit import RedditPostCacher
 
-	datas = random.choice(main)
-	link = datas[1]	
-	embed = discord.Embed(title = datas[0], timestamp = ctx.message.created_at, colour = discord.Colour.green())
-	embed.set_image(url = link)
-	embed.set_footer(text=f"Requested by {ctx.author}!")
-	if ".jpg" in str(link) or '.png' in str(link) or ".gif" in str(link[-4:-1]):
-		await ctx.send(embed=embed)
-	elif ".gifv" in str(link):
-		await ctx.send(link)
-	else:
-		await reddit_grabber(self, subrd, ctx)
-	return
-		
 
-class NSFWcommands(commands.Cog):
-	def __init__(self, bot):
-		self.bot = bot
+class NSFW(commands.Cog):
 
-	"""
-	NSFW COMMANDS
-	"""
-	@commands.command()
-	@commands.cooldown(1, 1, commands.BucketType.user)
-	@commands.is_nsfw()
-	async def ass(self, ctx):
-		sub = "ass"
-		await reddit_grabber(self, sub, ctx)
-	
-	@commands.command(aliases=['boobies', 'bobs'])
-	@commands.cooldown(1, 1, commands.BucketType.user)
-	@commands.is_nsfw()
-	async def boobs(self, ctx):
-		sub = "boobs"
-		await reddit_grabber(self, sub, ctx)
-	
-	@commands.command(aliases = ['vagena'])
-	@commands.cooldown(1, 1, commands.BucketType.user)
-	@commands.is_nsfw()
-	async def pussy(self, ctx):
-		sub = "pussy"
-		await reddit_grabber(self, sub, ctx)
-	
-	@commands.command(aliases = ['real_girls', 'nudes'])
-	@commands.cooldown(1, 1, commands.BucketType.user)
-	@commands.is_nsfw()
-	async def real(self, ctx):
-		sub = "RealGirls"
-		await reddit_grabber(self, sub, ctx)
-	
-	@commands.command(aliases = ['cum', 'cumsluts'])
-	@commands.cooldown(1, 1, commands.BucketType.user)
-	@commands.is_nsfw()
-	async def cumshot(self, ctx):
-		sub = "cumsluts"
-		await reddit_grabber(self, sub, ctx)
-	
-	@commands.command(aliases=['cream', 'pie'])
-	@commands.is_nsfw()
-	async def creampie(self, ctx):
-		sub = "creampie"
-		await reddit_grabber(self, sub, ctx)
-	
-	@commands.command(aliases=['pgif', 'porn'])
-	@commands.is_nsfw()
-	async def porngifs(self, ctx):
-		sub = "porngifs"
-		await reddit_grabber(self, sub, ctx)
-	
-	
-	@commands.command(aliases=['creamg', 'pieg'])
-	@commands.is_nsfw()
-	async def creampiegif(self, ctx):
-		sub = "creampiegifs"
-		await reddit_grabber(self, sub, ctx)
+    def __init__(self, bot):
+        self.bot = bot
+        self.subreddits = ('ass', 'LegalTeens', 'boobs', 'pussy',
+                           'TooCuteForPorn', 'Nudes', 'cumsluts', 'porngifs', 'hentai')
+        self.cache = RedditPostCacher(self.subreddits, './Other/cache/NSFW.pickle')
+        self.cache.cache_posts.start()
 
-	@commands.command(aliases=['onechan', 'onnichan'])
-	@commands.is_nsfw()
-	async def hentai(self, ctx):
-		sub = "hentai"
-		await reddit_grabber(self, sub, ctx)
-	
+    async def _reddit_sender(self, ctx, subrd: str, title: str):
+        """Fetches from reddit and sends results
+
+                Parameters
+                ----------
+                ctx : discord.ext.commands.Context
+                        The invocation context
+                subrd : str
+                        The subreddit to fetch from
+                title : str
+                        The title to use in the embed
+                """
+        # Gets the data from reddit!
+        submission = await self.cache.get_random_post(subrd)
+
+        # Sends the embed!
+        embed = discord.Embed(title=title, timestamp=ctx.message.created_at, colour = discord.Color.dark_purple())
+        embed.set_image(url=submission)
+        embed.set_footer(text=f'Requested by {ctx.author}')
+        await ctx.send(embed=embed)
+
+    # Errorhandler, if the channel isn't NSFW!
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+        if isinstance(error, commands.NSFWChannelRequired):
+            image = "https://i.imgur.com/oe4iK5i.gif"
+            embed = discord.Embed(
+                title="NSFW not allowed here",
+                description="Use NSFW commands in a NSFW marked channel.",
+                color=discord.Color.dark_blue(),
+            )
+            embed.set_image(url=image)
+            await ctx.send(embed=embed)
+        else:
+            traceback.print_exception(type(error), error, error.__traceback__)
+
+    # NSFW COMMANDS
+    @commands.command()
+    @commands.is_nsfw()
+    async def ass(self, ctx):
+        await self._reddit_sender(ctx, "ass", "DRUMS")
+
+    @commands.command()
+    @commands.is_nsfw()
+    async def teen(self, ctx):
+        await self._reddit_sender(ctx, "LegalTeens", "You like them young?")
+
+    @commands.command()
+    @commands.is_nsfw()
+    async def boobs(self, ctx):
+        await self._reddit_sender(ctx, "boobs", "Bounce! Bounce!")
+
+    @commands.command()
+    @commands.is_nsfw()
+    async def pussy(self, ctx):
+        await self._reddit_sender(ctx, "pussy", "Wet or Dry?")
+
+    @commands.command()
+    @commands.is_nsfw()
+    async def cutesluts(self, ctx):
+        await self._reddit_sender(ctx, "TooCuteForPorn", "Too cute for porn, aren't they?")
+
+    @commands.command()
+    @commands.is_nsfw()
+    async def nudes(self, ctx):
+        await self._reddit_sender(ctx, "Nudes", "Sick of pornstars? Me too!")
+
+    @commands.command(aliases=['cumsluts'])
+    @commands.is_nsfw()
+    async def cum(self, ctx):
+        await self._reddit_sender(ctx, "cumsluts", "And they don't stop cumming!")
+
+    @commands.command(aliases=['porngifs'])
+    @commands.is_nsfw()
+    async def porn(self, ctx):
+        await self._reddit_sender(ctx, "porn", "Is this better or pornhub?")
+
+    @commands.command()
+    @commands.is_nsfw()
+    async def hentai(self, ctx):
+        await self._reddit_sender(ctx, "hentai", "AnImE iS jUsT CaRtOoN")
+
+
 def setup(bot):
-	bot.add_cog(NSFWcommands(bot))
+    bot.add_cog(NSFW(bot))
