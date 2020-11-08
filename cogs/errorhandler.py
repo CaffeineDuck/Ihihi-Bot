@@ -39,7 +39,7 @@ class error_handler(commands.Cog):
 			await ctx.send(embed=embed)
 		elif isinstance(error, commands.CommandNotFound):
 			pass
-		if isinstance(error, commands.CommandOnCooldown):
+		elif isinstance(error, commands.CommandOnCooldown):
 			global time
 			time = error.retry_after
 			time = convert(time)
