@@ -65,7 +65,7 @@ class custom(commands.Cog):
 	@commands.command()
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	async def routine(self, ctx):
-		image = "https://cdn.discordapp.com/attachments/766213304846647309/768311655306100766/routine.png"
+		image = "https://cdn.discordapp.com/attachments/766213304846647309/774206708049903616/unknown.png"
 		embed = discord.Embed(title="Routine")
 		embed.set_image(url=image)
 		embed.set_footer(text="I want to DIE!" )
