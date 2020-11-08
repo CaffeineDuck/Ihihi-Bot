@@ -31,13 +31,7 @@ class error_handler(commands.Cog):
 
 	@commands.Cog.listener()
 	async def on_command_error(self, ctx, error):
-		if isinstance(error, commands.NSFWChannelRequired):
-			image = "https://i.imgur.com/oe4iK5i.gif"
-			embed = discord.Embed(title="NSFW not allowed here", description = "Use NSFW commands in a NSFW marked channel (look in channel settings, dummy")
-			embed.set_image(url=image)
-			embed.set_footer(text="GOTO NSFW CHANNEL DUMBASS" )
-			await ctx.send(embed=embed)
-		elif isinstance(error, commands.CommandNotFound):
+		if isinstance(error, commands.CommandNotFound):
 			pass
 		elif isinstance(error, commands.CommandOnCooldown):
 			global time
