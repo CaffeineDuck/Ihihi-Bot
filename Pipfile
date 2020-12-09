@@ -7,14 +7,14 @@ verify_ssl = true
 
 [packages]
 "discord.py" = "*"
+pymongo = "*"
 dnspython = "*"
 python-dotenv = "*"
-Flask = "*"
+flask = "*"
 asyncpraw = "*"
 thispersondoesnotexist = "*"
 requests = "*"
-Pillow = "*"
-pyyaml = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.8"

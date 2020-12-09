@@ -1,0 +1,4 @@
+TOKEN=<Discord Bot Token>
+MONGOCLIENT=<Mongo Client URI (URL ENCODED)>
+SECRET=<Reddit App Secret>
+ID=<Reddit App Id>
