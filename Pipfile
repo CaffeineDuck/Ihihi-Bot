@@ -16,6 +16,8 @@ requests = "*"
 Pillow = "*"
 pyyaml = "*"
 pymongo = "*"
+jishaku = "*"
+watchgod = "*"
 
 [requires]
 python_version = "3.8"

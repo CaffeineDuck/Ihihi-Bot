@@ -4,7 +4,7 @@ from discord import Embed, Color
 from discord.ext import commands
 
 
-class CustomBotHelpCommand(commands.HelpCommand):
+class TabiHelpCommand(commands.HelpCommand):
     def command_not_found(self, string: str) -> str:
         return f'I don\'t have the command `{string}`, if you have an idea for this suggest it in our support server ! [here](https://discord.gg/t2M5mCW6Ed)'
 
