@@ -4,7 +4,7 @@ import requests
 
 member={}
 people = []
-role_name = "Mods"
+role_name = "Admins"
 
 def api(people, mee6API, member):
 
